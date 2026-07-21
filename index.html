@@ -1,33 +1,206 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Skyden | Developer Portfolio</title>
-  <meta name="google-site-verification" content="iRYYBdXb666YgmYYNfNPLTks2zjRXQXS6SWkvdZZuBo" />    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background-color: #0d1117;
-      color: #c9d1d9;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
+  
+  <!-- Google Search Console Verification Tag -->
+  <meta name="google-site-verification" content="iRYYBdXb666YgmYYNfNPLTks2zjRXQXS6SWkvdZZuBo" />
+
+  <style>
+    :root {
+      --bg: #0d1117;
+      --card-bg: #161b22;
+      --border: #30363d;
+      --text: #c9d1d9;
+      --text-heading: #ffffff;
+      --accent: #58a6ff;
+      --accent-hover: #79c0ff;
+    }
+
+    * {
+      box-sizing: border-box;
       margin: 0;
+      padding: 0;
     }
-    .card {
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 2rem 1rem;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    header {
       text-align: center;
-      padding: 2rem;
-      border: 1px solid #30363d;
+      padding: 3rem 1.5rem;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
       border-radius: 12px;
-      background-color: #161b22;
+      margin-bottom: 2rem;
     }
-    h1 { color: #58a6ff; }
+
+    header h1 {
+      color: var(--accent);
+      font-size: 2.2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    header p {
+      color: var(--text-heading);
+      font-size: 1.1rem;
+    }
+
+    section {
+      margin-bottom: 2.5rem;
+    }
+
+    h2 {
+      color: var(--text-heading);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.5rem;
+      margin-bottom: 1.2rem;
+      font-size: 1.4rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.2rem;
+    }
+
+    .card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.25rem;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      border-color: var(--accent);
+    }
+
+    .card h3 {
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .tag {
+      background: #21262d;
+      border: 1px solid var(--border);
+      color: var(--accent-hover);
+      padding: 0.2rem 0.6rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+    }
+
+    .links {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin-top: 1rem;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.6rem 1.2rem;
+      color: #ffffff;
+      background-color: #238636;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background-color 0.2s ease;
+    }
+
+    .btn:hover {
+      background-color: #2ea043;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 3rem;
+      color: #8b949e;
+      font-size: 0.9rem;
+    }
   </style>
 </head>
 <body>
-  <div class="card">
-    <h1>Welcome to Skyden's Site</h1>
-    <p>Software development & portfolio space.</p>
+  <div class="container">
+    
+    <!-- Hero / Header Section -->
+    <header>
+      <h1>Hi, I'm Skyden 👋</h1>
+      <p>Software Engineering & Personal Project Space</p>
+      <div class="tags" style="justify-content: center;">
+        <span class="tag">Web Development</span>
+        <span class="tag">JavaScript</span>
+        <span class="tag">Python</span>
+        <span class="tag">Game Design</span>
+      </div>
+    </header>
+
+    <!-- About Section -->
+    <section>
+      <h2>About Me</h2>
+      <div class="card">
+        <p>Welcome to my portfolio space! I build interactive applications, code projects, and explore software architecture. This space is where I showcase my work and personal builds.</p>
+      </div>
+    </section>
+
+    <!-- Featured Projects Section -->
+    <section>
+      <h2>Featured Projects</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>Web Application</h3>
+          <p>Interactive web software built with modern HTML, CSS, and JavaScript UI elements.</p>
+          <div class="tags">
+            <span class="tag">HTML/CSS</span>
+            <span class="tag">JavaScript</span>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Software & Logic Tools</h3>
+          <p>Custom tools, scripts, and algorithmic projects designed for problem solving.</p>
+          <div class="tags">
+            <span class="tag">Python</span>
+            <span class="tag">Algorithms</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section>
+      <h2>Connect</h2>
+      <div class="card" style="text-align: center;">
+        <p>Check out my repositories and open-source contributions on GitHub!</p>
+        <div class="links">
+          <a class="btn" href="https://github.com/Skyden09" target="_blank" rel="noopener">GitHub Profile</a>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <p>© Skyden | Hosted on GitHub Pages</p>
+    </footer>
+
   </div>
 </body>
 </html>
