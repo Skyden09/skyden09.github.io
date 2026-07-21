@@ -3,10 +3,20 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Skyden | Developer Portfolio</title>
+  <title>Skyden | Physical & Digital Engineering</title>
   
   <!-- Google Search Console Verification Tag -->
   <meta name="google-site-verification" content="iRYYBdXb666YgmYYNfNPLTks2zjRXQXS6SWkvdZZuBo" />
+
+  <!-- Three.js Import Map -->
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+      }
+    }
+  </script>
 
   <style>
     :root {
@@ -17,6 +27,8 @@
       --text-heading: #ffffff;
       --accent: #58a6ff;
       --accent-hover: #79c0ff;
+      --accent-green: #238636;
+      --accent-orange: #d29922;
     }
 
     * {
@@ -34,13 +46,13 @@
     }
 
     .container {
-      max-width: 800px;
+      max-width: 900px;
       margin: 0 auto;
     }
 
     header {
       text-align: center;
-      padding: 3rem 1.5rem;
+      padding: 2.5rem 1.5rem;
       background: var(--card-bg);
       border: 1px solid var(--border);
       border-radius: 12px;
@@ -48,18 +60,36 @@
     }
 
     header h1 {
-      color: var(--accent);
+      color: var(--text-heading);
       font-size: 2.2rem;
       margin-bottom: 0.5rem;
     }
 
     header p {
-      color: var(--text-heading);
+      color: var(--accent);
       font-size: 1.1rem;
+      font-weight: 500;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1rem;
+      justify-content: center;
+    }
+
+    .tag {
+      background: #21262d;
+      border: 1px solid var(--border);
+      color: var(--accent-hover);
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
     }
 
     section {
-      margin-bottom: 2.5rem;
+      margin-bottom: 3rem;
     }
 
     h2 {
@@ -67,12 +97,123 @@
       border-bottom: 1px solid var(--border);
       padding-bottom: 0.5rem;
       margin-bottom: 1.2rem;
-      font-size: 1.4rem;
+      font-size: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
 
+    /* 3D Viewer Styles */
+    .viewer-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    #viewport-container {
+      width: 100%;
+      height: 420px;
+      background: radial-gradient(circle at center, #1c2128 0%, #0d1117 100%);
+      position: relative;
+      cursor: grab;
+    }
+
+    #viewport-container:active {
+      cursor: grabbing;
+    }
+
+    .viewer-controls {
+      display: flex;
+      gap: 0.5rem;
+      padding: 0.75rem 1rem;
+      background: #11151c;
+      border-top: 1px solid var(--border);
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .control-btn {
+      background: #21262d;
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 0.4rem 0.8rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: all 0.2s ease;
+    }
+
+    .control-btn:hover {
+      background: var(--border);
+      color: var(--text-heading);
+    }
+
+    .control-btn.active {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .viewer-hint {
+      font-size: 0.8rem;
+      color: #8b949e;
+    }
+
+    /* Build Log Cards */
+    .log-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.25rem;
+      margin-bottom: 1rem;
+    }
+
+    .log-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 0.5rem;
+    }
+
+    .log-title {
+      color: var(--accent);
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    .log-badge {
+      background: rgba(210, 153, 34, 0.15);
+      color: var(--accent-orange);
+      border: 1px solid rgba(210, 153, 34, 0.4);
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .log-metrics {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 0.75rem;
+      background: #0d1117;
+      padding: 0.75rem;
+      border-radius: 6px;
+      margin-top: 0.75rem;
+      font-size: 0.85rem;
+      border: 1px solid #21262d;
+    }
+
+    /* Project Grid */
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 1.2rem;
     }
 
@@ -81,12 +222,9 @@
       border: 1px solid var(--border);
       border-radius: 8px;
       padding: 1.25rem;
-      transition: transform 0.2s ease, border-color 0.2s ease;
-    }
-
-    .card:hover {
-      transform: translateY(-2px);
-      border-color: var(--accent);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
 
     .card h3 {
@@ -94,37 +232,17 @@
       margin-bottom: 0.5rem;
     }
 
-    .tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-top: 1rem;
-    }
-
-    .tag {
-      background: #21262d;
-      border: 1px solid var(--border);
-      color: var(--accent-hover);
-      padding: 0.2rem 0.6rem;
-      border-radius: 20px;
-      font-size: 0.85rem;
-    }
-
-    .links {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      margin-top: 1rem;
-    }
-
     .btn {
       display: inline-block;
-      padding: 0.6rem 1.2rem;
+      padding: 0.5rem 1rem;
       color: #ffffff;
-      background-color: #238636;
+      background-color: var(--accent-green);
       border-radius: 6px;
       text-decoration: none;
       font-weight: 600;
+      font-size: 0.9rem;
+      margin-top: 1rem;
+      text-align: center;
       transition: background-color 0.2s ease;
     }
 
@@ -136,71 +254,265 @@
       text-align: center;
       margin-top: 3rem;
       color: #8b949e;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
     }
   </style>
 </head>
 <body>
   <div class="container">
     
-    <!-- Hero / Header Section -->
+    <!-- Hero / Header -->
     <header>
-      <h1>Hi, I'm Skyden 👋</h1>
-      <p>Software Engineering & Personal Project Space</p>
-      <div class="tags" style="justify-content: center;">
-        <span class="tag">Web Development</span>
-        <span class="tag">JavaScript</span>
-        <span class="tag">Python</span>
-        <span class="tag">Game Design</span>
+      <h1>Skyden</h1>
+      <p>"I build physical and digital things — here's the interactive proof."</p>
+      <div class="tags">
+        <span class="tag">3D CAD & Prototyping</span>
+        <span class="tag">WebGL / Three.js</span>
+        <span class="tag">Software Development</span>
+        <span class="tag">Mechanical Engineering</span>
       </div>
     </header>
 
-    <!-- About Section -->
+    <!-- 3D Interactive Sandbox -->
     <section>
-      <h2>About Me</h2>
-      <div class="card">
-        <p>Welcome to my portfolio space! I build interactive applications, code projects, and explore software architecture. This space is where I showcase my work and personal builds.</p>
+      <h2>⚙️ Interactive 3D CAD Showcase</h2>
+      <div class="viewer-card">
+        <div id="viewport-container"></div>
+        <div class="viewer-controls">
+          <div class="btn-group">
+            <button class="control-btn" id="btn-wireframe">Wireframe Mode</button>
+            <button class="control-btn" id="btn-explode">Explode Assembly</button>
+            <button class="control-btn" id="btn-reset">Reset Camera</button>
+          </div>
+          <span class="viewer-hint">Drag to rotate • Scroll to zoom</span>
+        </div>
       </div>
     </section>
 
-    <!-- Featured Projects Section -->
+    <!-- Engineering Build Logs -->
     <section>
-      <h2>Featured Projects</h2>
+      <h2>📐 Engineering Process & Build Logs</h2>
+      
+      <div class="log-card">
+        <div class="log-header">
+          <span class="log-title">01. Recalculating Tolerances for 3D Printed Planetary Gearbox</span>
+          <span class="log-badge">Iterative Design</span>
+        </div>
+        <p>Initial print experienced mechanical binding due to PETG thermal expansion during extrusion. Recalculated mesh clearance and added chamfers to horizontal expansion edges to ensure zero-backlash rotation.</p>
+        <div class="log-metrics">
+          <div><strong>Initial Clearance:</strong> 0.15 mm (Seized)</div>
+          <div><strong>Optimal Clearance:</strong> 0.28 mm (Smooth)</div>
+          <div><strong>Print Speed:</strong> 45 mm/s @ 240°C</div>
+        </div>
+      </div>
+
+      <div class="log-card">
+        <div class="log-header">
+          <span class="log-title">02. Structural Optimization of 3D Printed Mounting Bracket</span>
+          <span class="log-badge">FEA & Stress Analysis</span>
+        </div>
+        <p>Analyzed load points on a custom motor mount. Redesigned internal infill geometry from grid to gyroid, reducing filament usage by 22% while increasing shear stress resistance along layer lines.</p>
+        <div class="log-metrics">
+          <div><strong>Material:</strong> PETG / Tough PLA</div>
+          <div><strong>Infill Pattern:</strong> 25% Gyroid</div>
+          <div><strong>Weight Saved:</strong> 34g per unit</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Software & Repositories -->
+    <section>
+      <h2>💻 Code & Documentation</h2>
       <div class="grid">
         <div class="card">
-          <h3>Web Application</h3>
-          <p>Interactive web software built with modern HTML, CSS, and JavaScript UI elements.</p>
-          <div class="tags">
-            <span class="tag">HTML/CSS</span>
-            <span class="tag">JavaScript</span>
+          <div>
+            <h3>3D WebGL Portfolio Viewer</h3>
+            <p>Interactive browser-based 3D renderer built with Three.js and ES modules for hosting engineering CAD prototypes.</p>
+            <div class="tags" style="justify-content: flex-start;">
+              <span class="tag">JavaScript</span>
+              <span class="tag">Three.js</span>
+              <span class="tag">WebGL</span>
+            </div>
           </div>
+          <a class="btn" href="https://github.com/Skyden09/skyden09.github.io" target="_blank" rel="noopener">View Repository</a>
         </div>
-        <div class="card">
-          <h3>Software & Logic Tools</h3>
-          <p>Custom tools, scripts, and algorithmic projects designed for problem solving.</p>
-          <div class="tags">
-            <span class="tag">Python</span>
-            <span class="tag">Algorithms</span>
-          </div>
-        </div>
-      </div>
-    </section>
 
-    <!-- Contact Section -->
-    <section>
-      <h2>Connect</h2>
-      <div class="card" style="text-align: center;">
-        <p>Check out my repositories and open-source contributions on GitHub!</p>
-        <div class="links">
+        <div class="card">
+          <div>
+            <h3>Software & Logic Tools</h3>
+            <p>Custom algorithmic scripts, game mechanics, and computational projects built for problem solving and physics simulation.</p>
+            <div class="tags" style="justify-content: flex-start;">
+              <span class="tag">Python</span>
+              <span class="tag">Algorithms</span>
+            </div>
+          </div>
           <a class="btn" href="https://github.com/Skyden09" target="_blank" rel="noopener">GitHub Profile</a>
         </div>
       </div>
     </section>
 
     <footer>
-      <p>© Skyden | Hosted on GitHub Pages</p>
+      <p>© Skyden • Interactive Engineering Portfolio • Hosted on GitHub Pages</p>
     </footer>
 
   </div>
+
+  <!-- Three.js 3D Scene Script -->
+  <script type="module">
+    import * as THREE from 'three';
+    import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+    // Container Setup
+    const container = document.getElementById('viewport-container');
+    const width = container.clientWidth;
+    const height = container.clientHeight;
+
+    // Scene, Camera, Renderer
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
+    camera.position.set(12, 10, 15);
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setSize(width, height);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.shadowMap.enabled = true;
+    container.appendChild(renderer.domElement);
+
+    // Orbit Controls
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.05;
+
+    // Lights
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+    scene.add(ambientLight);
+
+    const dirLight1 = new THREE.DirectionalLight(0x58a6ff, 2.0);
+    dirLight1.position.set(10, 20, 10);
+    scene.add(dirLight1);
+
+    const dirLight2 = new THREE.DirectionalLight(0xd29922, 1.0);
+    dirLight2.position.set(-10, -10, -10);
+    scene.add(dirLight2);
+
+    // Grid Floor
+    const gridHelper = new THREE.GridHelper(20, 20, 0x30363d, 0x21262d);
+    gridHelper.position.y = -3;
+    scene.add(gridHelper);
+
+    // Create a Multi-Part Assembly Model (Procedural Mechanical CAD Model)
+    const assemblyGroup = new THREE.Group();
+
+    // Materials
+    const metallicMaterial = new THREE.MeshStandardMaterial({
+      color: 0x58a6ff,
+      metalness: 0.7,
+      roughness: 0.2
+    });
+
+    const coreMaterial = new THREE.MeshStandardMaterial({
+      color: 0xd29922,
+      metalness: 0.5,
+      roughness: 0.3
+    });
+
+    const outerMaterial = new THREE.MeshStandardMaterial({
+      color: 0x8b949e,
+      metalness: 0.8,
+      roughness: 0.4
+    });
+
+    // Outer Ring / Casing
+    const ringGeo = new THREE.TorusGeometry(3.5, 0.4, 16, 50);
+    const ringMesh = new THREE.Mesh(ringGeo, outerMaterial);
+    ringMesh.rotation.x = Math.PI / 2;
+    assemblyGroup.add(ringMesh);
+
+    // Central Mechanical Gear / Core
+    const coreGeo = new THREE.CylinderGeometry(1.8, 1.8, 1.5, 24);
+    const coreMesh = new THREE.Mesh(coreGeo, coreMaterial);
+    assemblyGroup.add(coreMesh);
+
+    // Exploding Gear Teeth / Shafts
+    const partsList = [];
+    const numShafts = 6;
+    for (let i = 0; i < numShafts; i++) {
+      const angle = (i / numShafts) * Math.PI * 2;
+      const shaftGeo = new THREE.BoxGeometry(0.6, 0.6, 2.2);
+      const shaft = new THREE.Mesh(shaftGeo, metallicMaterial);
+      
+      const baseX = Math.cos(angle) * 2.5;
+      const baseZ = Math.sin(angle) * 2.5;
+      shaft.position.set(baseX, 0, baseZ);
+      shaft.rotation.y = -angle;
+
+      shaft.userData = {
+        basePos: new THREE.Vector3(baseX, 0, baseZ),
+        explodeDir: new THREE.Vector3(Math.cos(angle), 0, Math.sin(angle))
+      };
+
+      partsList.push(shaft);
+      assemblyGroup.add(shaft);
+    }
+
+    scene.add(assemblyGroup);
+
+    // State Variables
+    let isWireframe = false;
+    let isExploded = false;
+
+    // Interactive Buttons
+    document.getElementById('btn-wireframe').addEventListener('click', (e) => {
+      isWireframe = !isWireframe;
+      metallicMaterial.wireframe = isWireframe;
+      coreMaterial.wireframe = isWireframe;
+      outerMaterial.wireframe = isWireframe;
+      e.target.classList.toggle('active', isWireframe);
+    });
+
+    document.getElementById('btn-explode').addEventListener('click', (e) => {
+      isExploded = !isExploded;
+      e.target.classList.toggle('active', isExploded);
+    });
+
+    document.getElementById('btn-reset').addEventListener('click', () => {
+      camera.position.set(12, 10, 15);
+      controls.target.set(0, 0, 0);
+      controls.update();
+    });
+
+    // Window Resize Handling
+    window.addEventListener('resize', () => {
+      const newWidth = container.clientWidth;
+      const newHeight = container.clientHeight;
+      camera.aspect = newWidth / newHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(newWidth, newHeight);
+    });
+
+    // Animation Loop
+    function animate() {
+      requestAnimationFrame(animate);
+
+      // Slow rotation when not exploded
+      if (!isExploded) {
+        assemblyGroup.rotation.y += 0.005;
+      }
+
+      // Smooth Explode Animation Lerp
+      partsList.forEach(part => {
+        const targetOffset = isExploded ? 1.8 : 0;
+        const targetPos = part.userData.basePos.clone().add(
+          part.userData.explodeDir.clone().multiplyScalar(targetOffset)
+        );
+        part.position.lerp(targetPos, 0.1);
+      });
+
+      controls.update();
+      renderer.render(scene, camera);
+    }
+
+    animate();
+  </script>
 </body>
 </html>
