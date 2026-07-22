@@ -63,13 +63,168 @@
       background-size: 42px 42px;
       color: var(--text);
       line-height: 1.6;
-      padding: 3rem 1.25rem 1rem;
+      padding: 0 1.25rem 1rem;
     }
-
-    .container { max-width: 1000px; margin: 0 auto; }
 
     a { color: inherit; }
     ::selection { background: var(--cyan-dim); color: var(--text-bright); }
+
+    /* ===== TOP NAVIGATION BAR ===== */
+    .top-navbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(14, 23, 40, 0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--line-bright);
+      margin: 0 -1.25rem 2rem -1.25rem;
+      padding: 0.85rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-brand {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 1.2rem;
+      color: var(--text-bright);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .nav-brand span {
+      color: var(--cyan);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      border: 1px solid var(--cyan);
+      padding: 0.1rem 0.4rem;
+      border-radius: 3px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--text-dim);
+      transition: color 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--cyan);
+    }
+
+    .nav-links a.active::before {
+      content: ">";
+      color: var(--amber);
+      font-weight: bold;
+    }
+
+    /* ===== MAIN LAYOUT WITH SIDEBAR ===== */
+    .page-layout {
+      max-width: 1250px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      gap: 2rem;
+      align-items: start;
+    }
+
+    /* Sidebar Navigation */
+    .sidebar-nav {
+      position: sticky;
+      top: 5rem;
+      background: var(--bg-panel);
+      border: 1px solid var(--line-bright);
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .sidebar-section-title {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      color: var(--amber);
+      text-transform: uppercase;
+      border-bottom: 1px solid var(--line-bright);
+      padding-bottom: 0.4rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .sidebar-menu {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .sidebar-menu a {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--text);
+      text-decoration: none;
+      padding: 0.4rem 0.6rem;
+      display: block;
+      border: 1px solid transparent;
+      transition: all 0.2s ease;
+    }
+
+    .sidebar-menu a:hover {
+      border-color: var(--cyan-dim);
+      background: rgba(94, 234, 212, 0.05);
+      color: var(--cyan);
+    }
+
+    .sidebar-menu a.active {
+      border-color: var(--cyan);
+      background: var(--cyan-dim);
+      color: var(--cyan);
+      font-weight: bold;
+    }
+
+    .sys-telemetry {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      background: var(--bg-panel-2);
+      border: 1px solid var(--line-bright);
+      padding: 0.75rem;
+      line-height: 1.5;
+    }
+
+    .sys-telemetry .status-online {
+      color: var(--cyan);
+      font-weight: bold;
+    }
+
+    .container { max-width: 100%; margin: 0 auto; }
+
+    @media (max-width: 900px) {
+      .page-layout {
+        grid-template-columns: 1fr;
+      }
+      .sidebar-nav {
+        position: relative;
+        top: 0;
+        margin-bottom: 2rem;
+      }
+    }
 
     /* ===== Corner frame — the signature motif ===== */
     .frame { position: relative; }
@@ -151,6 +306,7 @@
     @media (max-width: 640px) {
       .title-block { grid-template-columns: repeat(2, 1fr); }
       .title-block div:nth-child(2) { border-right: none; }
+      .nav-links { gap: 0.8rem; font-size: 0.7rem; }
     }
 
     /* ===== Section scaffolding ===== */
@@ -324,13 +480,6 @@
 
     @media (max-width: 768px) { .log-image-placeholder { width: 100%; } }
 
-    /*
-       TO ADD A REAL PHOTO:
-       Replace .log-image-placeholder div with:
-         <img src="images/your-photo.jpg" alt="..." class="log-image-placeholder" style="object-fit:cover;">
-       and drop the background/border rules above for that instance.
-    */
-
     .log-content { flex-grow: 1; min-width: 0; }
 
     .log-header {
@@ -368,7 +517,7 @@
     .spec-row .v { color: var(--ink); font-weight: 700; text-align: right; }
 
     /* ===== Repository / project cards ===== */
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
 
     .card {
       background: var(--bg-panel);
@@ -462,253 +611,280 @@
   </style>
 </head>
 <body>
-  <div class="container">
 
-    <!-- Title block header -->
-    <header class="frame">
+  <!-- STICKY TOP NAVIGATION BAR -->
+  <nav class="top-navbar">
+    <a href="index.html" class="nav-brand">
+      SKYDEN <span>v2.0</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="build-logs.html">Build Logs</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+  </nav>
+
+  <!-- MAIN PAGE LAYOUT WITH SIDEBAR -->
+  <div class="page-layout">
+
+    <!-- SIDEBAR NAVIGATION DOCK -->
+    <aside class="sidebar-nav frame">
       <span class="corner-tr"></span><span class="corner-bl"></span>
-      <span class="eyebrow">Aerospace R&D — Portfolio</span>
-      <h1>SKYDEN</h1>
-      <p class="tagline">Propelling 3D design from CAD to flight.</p>
-
-      <div class="title-block">
-        <div>
-          <span class="label">Drawn by</span>
-          <span class="value">[Your Name]</span>
-        </div>
-        <div>
-          <span class="label">Discipline</span>
-          <span class="value">Propulsion / Aero</span>
-        </div>
-        <div>
-          <span class="label">Sheet</span>
-          <span class="value">01–04</span>
-        </div>
-        <div>
-          <span class="label">Status</span>
-          <span class="value">Active build</span>
-        </div>
+      <div>
+        <div class="sidebar-section-title">Navigation Pages</div>
+        <ul class="sidebar-menu">
+          <li><a href="index.html" class="active">01. Home &amp; 3D Viewer</a></li>
+          <li><a href="projects.html">02. CAD &amp; Projects</a></li>
+          <li><a href="build-logs.html">03. Build Logs</a></li>
+          <li><a href="about.html">04. About &amp; Bio</a></li>
+        </ul>
       </div>
-    </header>
 
-    <!-- Profile -->
-    <section>
-      <span class="sheet-eyebrow">Sheet 01</span>
-      <h2>Profile</h2>
-      <div class="dim-line"></div>
-
-      <div class="profile-grid">
-        <div class="bio-panel frame">
-          <span class="corner-tr"></span><span class="corner-bl"></span>
-          <div class="markup">Markup — replace bracketed text with your info</div>
-          <div class="bio-header">
-            <div class="avatar-placeholder">Photo</div>
-            <div>
-              <div class="name">[Your Name]</div>
-              <div class="role">[Your role — e.g. Aerospace Eng. Student]</div>
-            </div>
-          </div>
-          <p>[One or two sentences on who you are — your program or school, and how you got into propulsion and aero-structural design.]</p>
-          <p>[A sentence on what you're currently building or exploring next.]</p>
-        </div>
-
-        <div class="skills-panel frame">
-          <span class="corner-tr"></span><span class="corner-bl"></span>
-          <div class="skill-group">
-            <span class="label">CAD &amp; Simulation</span>
-            <div class="chip-row">
-              <span class="chip">Fusion 360</span>
-              <span class="chip">SolidWorks</span>
-              <span class="chip">CFD Analysis</span>
-            </div>
-          </div>
-          <div class="skill-group">
-            <span class="label">Fabrication</span>
-            <div class="chip-row">
-              <span class="chip">FDM Printing</span>
-              <span class="chip">Resin / SLA</span>
-              <span class="chip">Metal FFF</span>
-            </div>
-          </div>
-          <div class="skill-group">
-            <span class="label">Programming</span>
-            <div class="chip-row">
-              <span class="chip">Python</span>
-              <span class="chip">JavaScript</span>
-              <span class="chip">Three.js / WebGL</span>
-            </div>
-          </div>
-        </div>
+      <div>
+        <div class="sidebar-section-title">Jump to Section</div>
+        <ul class="sidebar-menu">
+          <li><a href="#profile">Profile Sheet</a></li>
+          <li><a href="#viewport-section">Interactive Engine</a></li>
+          <li><a href="#design-logs">Design Reports</a></li>
+          <li><a href="#repositories">Repositories</a></li>
+        </ul>
       </div>
-    </section>
 
-    <!-- Interactive 3D Sandbox -->
-    <section>
-      <span class="sheet-eyebrow">Sheet 02</span>
-      <h2>Interactive Aero-Engine Assembly</h2>
-      <div class="dim-line"></div>
+      <div class="sys-telemetry">
+        <div style="margin-bottom: 0.3rem;">SYS STATUS: <span class="status-online">ONLINE</span></div>
+        <div>WEBGL 2.0: ACTIVE</div>
+        <div>BUILD: 2026.07</div>
+      </div>
+    </aside>
 
-      <div class="viewer-card frame">
+    <!-- MAIN CONTENT CONTAINER -->
+    <div class="container">
+
+      <!-- Title block header -->
+      <header class="frame">
         <span class="corner-tr"></span><span class="corner-bl"></span>
-        <div id="viewport-container">
-          <div class="hud hud-tl">
-            MODE: <span id="hud-mode">ASSEMBLED</span><br>
-            STRUCTURE: <span id="hud-structure">SOLID</span>
-          </div>
-          <div class="hud hud-tr">
-            AXLE θ: <span id="hud-rotation">0°</span><br>
-            <span class="dim">STAGES: 5C / 3T</span>
-          </div>
-          <div class="hud hud-bl">
-            <span class="dim">VIEW: ORBIT</span>
-          </div>
-          <div class="hud-crosshair"></div>
-        </div>
-        <div class="viewer-controls">
-          <div class="btn-group">
-            <button class="control-btn" id="btn-explode">Explode assembly</button>
-            <button class="control-btn" id="btn-wireframe">Show mesh</button>
-            <button class="control-btn" id="btn-reset">Reset camera</button>
-          </div>
-          <span class="viewer-hint">DRAG TO ROTATE · SCROLL TO ZOOM</span>
-        </div>
-      </div>
-    </section>
+        <span class="eyebrow">Aerospace R&amp;D — Portfolio</span>
+        <h1>SKYDEN</h1>
+        <p class="tagline">Propelling 3D design from CAD to flight.</p>
 
-    <!-- Design logs -->
-    <section>
-      <span class="sheet-eyebrow">Sheet 03</span>
-      <h2>Design Logs &amp; Print Reports</h2>
-      <div class="dim-line"></div>
-
-      <div class="log-grid">
-        <div class="log-card frame frame-paper">
-          <span class="corner-tr"></span><span class="corner-bl"></span>
-          <div class="log-image-placeholder">Photo pending — printed turbine stage</div>
-          <div class="log-content">
-            <div class="log-header">
-              <span class="log-title">01 · Iterative Cooling for 3D Printed High-Temp Turbine Blades</span>
-              <span class="log-badge">Thermal</span>
-            </div>
-            <p>Designed and printed internal cooling channels in turbine geometry to manage heat during high-speed rotation. Tested gyroid lattice structures to increase surface area for heat exchange without sacrificing structural integrity.</p>
-            <div class="spec-table">
-              <div class="spec-row"><span class="k">Material</span><span class="v">High-temp resin / metal FFF</span></div>
-              <div class="spec-row"><span class="k">Print tolerance</span><span class="v">±0.05 mm</span></div>
-              <div class="spec-row"><span class="k">Blade geometry</span><span class="v">Internal cooling channels</span></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="log-card frame frame-paper">
-          <span class="corner-tr"></span><span class="corner-bl"></span>
-          <div class="log-image-placeholder">Photo pending — UAV wing with infill</div>
-          <div class="log-content">
-            <div class="log-header">
-              <span class="log-title">02 · Lightweight Airfoil Structure for UAV Wings</span>
-              <span class="log-badge">Aero / Structural</span>
-            </div>
-            <p>Optimized a custom NACA airfoil section for a modular drone wing. Redesigned internal infill density to concentrate strength at the spar points while keeping the trailing edges lightweight for reduced drag.</p>
-            <div class="spec-table">
-              <div class="spec-row"><span class="k">CAD software</span><span class="v">Fusion 360 / SolidWorks</span></div>
-              <div class="spec-row"><span class="k">Weight reduction</span><span class="v">35% vs. solid print</span></div>
-              <div class="spec-row"><span class="k">Test status</span><span class="v">CFD passed</span></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="log-card frame frame-paper">
-          <span class="corner-tr"></span><span class="corner-bl"></span>
-          <div class="log-image-placeholder">Photo pending — [your build]</div>
-          <div class="log-content">
-            <div class="log-header">
-              <span class="log-title">03 · [Your Next Build Title]</span>
-              <span class="log-badge">Template</span>
-            </div>
-            <p>[Describe the problem you set out to solve, your design approach, and what you'd change next time.]</p>
-            <div class="spec-table">
-              <div class="spec-row"><span class="k">Material</span><span class="v">[e.g., PETG / Nylon]</span></div>
-              <div class="spec-row"><span class="k">Key metric</span><span class="v">[e.g., ±0.1 mm]</span></div>
-              <div class="spec-row"><span class="k">Status</span><span class="v">[e.g., in testing]</span></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Repositories -->
-    <section>
-      <span class="sheet-eyebrow">Sheet 04</span>
-      <h2>Computational Engineering Repositories</h2>
-      <div class="dim-line"></div>
-
-      <div class="grid">
-        <div class="card frame">
-          <span class="corner-tr"></span><span class="corner-bl"></span>
+        <div class="title-block">
           <div>
-            <div class="card-img-placeholder">Screenshot pending — 3D aero viewer</div>
-            <h3>3D Aero-Propulsion Viewer</h3>
-            <p>A WebGL-powered engineering playground showcasing functional jet engine assemblies and aircraft components directly in the browser.</p>
-            <div class="chip-row">
-              <span class="chip">JavaScript</span>
-              <span class="chip">Three.js</span>
-              <span class="chip">3D printing CAD</span>
-            </div>
+            <span class="label">Drawn by</span>
+            <span class="value">Skyden</span>
           </div>
-          <a class="btn" href="https://github.com/Skyden09/skyden09.github.io" target="_blank" rel="noopener">View repository</a>
-        </div>
-
-        <div class="card frame">
-          <span class="corner-tr"></span><span class="corner-bl"></span>
           <div>
-            <div class="card-img-placeholder">Screenshot pending — avionics script output</div>
-            <h3>Avionics &amp; Slicer Automation</h3>
-            <p>Python scripts designed to automate 3D slicer settings for aerospace materials and process flight data logs.</p>
-            <div class="chip-row">
-              <span class="chip">Python</span>
-              <span class="chip">Algorithms</span>
-              <span class="chip">Data analysis</span>
+            <span class="label">Discipline</span>
+            <span class="value">Propulsion / Aero</span>
+          </div>
+          <div>
+            <span class="label">Sheet</span>
+            <span class="value">01–04</span>
+          </div>
+          <div>
+            <span class="label">Status</span>
+            <span class="value">Active build</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- Profile -->
+      <section id="profile">
+        <span class="sheet-eyebrow">Sheet 01</span>
+        <h2>Profile</h2>
+        <div class="dim-line"></div>
+
+        <div class="profile-grid">
+          <div class="bio-panel frame">
+            <span class="corner-tr"></span><span class="corner-bl"></span>
+            <div class="bio-header">
+              <div class="avatar-placeholder">Photo</div>
+              <div>
+                <div class="name">Skyden</div>
+                <div class="role">Aerospace CAD &amp; Software Builder</div>
+              </div>
+            </div>
+            <p>I build at the intersection of physical prototyping and digital software—designing 3D-printed aerospace hardware, thermal tolerance models, and browser WebGL renderers.</p>
+            <p>Currently focused on additive manufacturing for UAV airfoils and high-temperature turbine components.</p>
+          </div>
+
+          <div class="skills-panel frame">
+            <span class="corner-tr"></span><span class="corner-bl"></span>
+            <div class="skill-group">
+              <span class="label">CAD &amp; Simulation</span>
+              <div class="chip-row">
+                <span class="chip">Fusion 360</span>
+                <span class="chip">SolidWorks</span>
+                <span class="chip">CFD Analysis</span>
+              </div>
+            </div>
+            <div class="skill-group">
+              <span class="label">Fabrication</span>
+              <div class="chip-row">
+                <span class="chip">FDM Printing</span>
+                <span class="chip">Resin / SLA</span>
+                <span class="chip">PETG &amp; LW-PLA</span>
+              </div>
+            </div>
+            <div class="skill-group">
+              <span class="label">Programming</span>
+              <div class="chip-row">
+                <span class="chip">Python</span>
+                <span class="chip">JavaScript</span>
+                <span class="chip">Three.js / WebGL</span>
+              </div>
             </div>
           </div>
-          <a class="btn" href="https://github.com/Skyden09" target="_blank" rel="noopener">View scripts profile</a>
+        </div>
+      </section>
+
+      <!-- Interactive 3D Sandbox -->
+      <section id="viewport-section">
+        <span class="sheet-eyebrow">Sheet 02</span>
+        <h2>Interactive Aero-Engine Assembly</h2>
+        <div class="dim-line"></div>
+
+        <div class="viewer-card frame">
+          <span class="corner-tr"></span><span class="corner-bl"></span>
+          <div id="viewport-container">
+            <div class="hud hud-tl">
+              MODE: <span id="hud-mode">ASSEMBLED</span><br>
+              STRUCTURE: <span id="hud-structure">SOLID</span>
+            </div>
+            <div class="hud hud-tr">
+              AXLE θ: <span id="hud-rotation">0°</span><br>
+              <span class="dim">STAGES: 5C / 3T</span>
+            </div>
+            <div class="hud hud-bl">
+              <span class="dim">VIEW: ORBIT</span>
+            </div>
+            <div class="hud-crosshair"></div>
+          </div>
+          <div class="viewer-controls">
+            <div class="btn-group">
+              <button class="control-btn" id="btn-explode">Explode assembly</button>
+              <button class="control-btn" id="btn-wireframe">Show mesh</button>
+              <button class="control-btn" id="btn-reset">Reset camera</button>
+            </div>
+            <span class="viewer-hint">DRAG TO ROTATE · SCROLL TO ZOOM</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Design logs -->
+      <section id="design-logs">
+        <span class="sheet-eyebrow">Sheet 03</span>
+        <h2>Design Logs &amp; Print Reports</h2>
+        <div class="dim-line"></div>
+
+        <div class="log-grid">
+          <div class="log-card frame frame-paper">
+            <span class="corner-tr"></span><span class="corner-bl"></span>
+            <div class="log-image-placeholder">Photo pending — printed turbine stage</div>
+            <div class="log-content">
+              <div class="log-header">
+                <span class="log-title">01 · Iterative Cooling for 3D Printed High-Temp Turbine Blades</span>
+                <span class="log-badge">Thermal</span>
+              </div>
+              <p>Designed and printed internal cooling channels in turbine geometry to manage heat during high-speed rotation. Tested gyroid lattice structures to increase surface area for heat exchange without sacrificing structural integrity.</p>
+              <div class="spec-table">
+                <div class="spec-row"><span class="k">Material</span><span class="v">PETG / High-Temp Resin</span></div>
+                <div class="spec-row"><span class="k">Print tolerance</span><span class="v">±0.05 mm</span></div>
+                <div class="spec-row"><span class="k">Blade geometry</span><span class="v">Internal cooling channels</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="log-card frame frame-paper">
+            <span class="corner-tr"></span><span class="corner-bl"></span>
+            <div class="log-image-placeholder">Photo pending — UAV wing with infill</div>
+            <div class="log-content">
+              <div class="log-header">
+                <span class="log-title">02 · Lightweight Airfoil Structure for UAV Wings</span>
+                <span class="log-badge">Aero / Structural</span>
+              </div>
+              <p>Optimized a custom NACA airfoil section for a modular drone wing. Redesigned internal infill density to concentrate strength at the spar points while keeping the trailing edges lightweight for reduced drag.</p>
+              <div class="spec-table">
+                <div class="spec-row"><span class="k">CAD software</span><span class="v">Fusion 360 / SolidWorks</span></div>
+                <div class="spec-row"><span class="k">Weight reduction</span><span class="v">35% vs. solid print</span></div>
+                <div class="spec-row"><span class="k">Test status</span><span class="v">CFD passed</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Repositories -->
+      <section id="repositories">
+        <span class="sheet-eyebrow">Sheet 04</span>
+        <h2>Computational Engineering Repositories</h2>
+        <div class="dim-line"></div>
+
+        <div class="grid">
+          <div class="card frame">
+            <span class="corner-tr"></span><span class="corner-bl"></span>
+            <div>
+              <div class="card-img-placeholder">Screenshot pending — 3D aero viewer</div>
+              <h3>3D Aero-Propulsion Viewer</h3>
+              <p>A WebGL-powered engineering playground showcasing functional jet engine assemblies and aircraft components directly in the browser.</p>
+              <div class="chip-row">
+                <span class="chip">JavaScript</span>
+                <span class="chip">Three.js</span>
+                <span class="chip">3D printing CAD</span>
+              </div>
+            </div>
+            <a class="btn" href="https://github.com/Skyden09/skyden09.github.io" target="_blank" rel="noopener">View repository</a>
+          </div>
+
+          <div class="card frame">
+            <span class="corner-tr"></span><span class="corner-bl"></span>
+            <div>
+              <div class="card-img-placeholder">Screenshot pending — avionics script output</div>
+              <h3>Avionics &amp; Slicer Automation</h3>
+              <p>Python scripts designed to automate 3D slicer settings for aerospace materials and process flight data logs.</p>
+              <div class="chip-row">
+                <span class="chip">Python</span>
+                <span class="chip">Algorithms</span>
+                <span class="chip">Data analysis</span>
+              </div>
+            </div>
+            <a class="btn" href="https://github.com/Skyden09" target="_blank" rel="noopener">View scripts profile</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Signoff -->
+      <div class="signoff">
+        <div>
+          <span class="label">Designed by</span>
+          <span class="value">Skyden</span>
+        </div>
+        <div>
+          <span class="label">GitHub</span>
+          <span class="value"><a href="https://github.com/Skyden09" target="_blank" rel="noopener">github.com/Skyden09</a></span>
+        </div>
+        <div>
+          <span class="label">Projects</span>
+          <span class="value"><a href="projects.html">projects.html</a></span>
+        </div>
+        <div>
+          <span class="label">Build Logs</span>
+          <span class="value"><a href="build-logs.html">build-logs.html</a></span>
         </div>
       </div>
-    </section>
 
-    <!-- Signoff -->
-    <div class="signoff">
-      <div>
-        <span class="label">Designed by</span>
-        <span class="value">[Your Name]</span>
+      <div class="resume-cta">
+        <a class="btn" href="about.html">View About Page &amp; Experience</a>
       </div>
-      <div>
-        <span class="label">Email</span>
-        <span class="value"><a href="mailto:you@example.com">[you@example.com]</a></span>
-      </div>
-      <div>
-        <span class="label">LinkedIn</span>
-        <span class="value"><a href="https://linkedin.com/in/yourname" target="_blank" rel="noopener">[linkedin.com/in/yourname]</a></span>
-      </div>
-      <div>
-        <span class="label">GitHub</span>
-        <span class="value"><a href="https://github.com/Skyden09" target="_blank" rel="noopener">github.com/Skyden09</a></span>
-      </div>
+
+      <footer>
+        SKYDEN — SPECIALIZED 3D AERO-PROPULSION DESIGN · HOSTED ON GITHUB PAGES
+      </footer>
+
     </div>
-
-    <!--
-       RESUME LINK: commit a resume.pdf to your repo root and this
-       button will work as-is. Or swap the href for a hosted link.
-    -->
-    <div class="resume-cta">
-      <a class="btn" href="resume.pdf" target="_blank" rel="noopener">Download résumé (PDF)</a>
-    </div>
-
-    <footer>
-      SKYDEN — SPECIALIZED 3D AERO-PROPULSION DESIGN · HOSTED ON GITHUB PAGES
-    </footer>
-
   </div>
 
-  <!-- Jet engine scene -->
+  <!-- Jet engine scene script -->
   <script type="module">
     import * as THREE from 'three';
     import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
