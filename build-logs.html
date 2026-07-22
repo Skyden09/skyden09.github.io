@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Engineering Build Logs | Skyden</title>
+  
+  <style>
+    :root {
+      --bg: #ffffff;
+      --card-bg: #f6f8fa;
+      --border: #d0d7de;
+      --text: #24292f;
+      --text-heading: #000000;
+      --accent: #0969da;
+      --accent-hover: #1e83ff;
+      --accent-green: #1a7f37;
+      --accent-orange: #9a6700;
+      --shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 0 1rem 2rem 1rem;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    /* Navigation Bar */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 0;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 2rem;
+    }
+
+    .nav-logo {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--text-heading);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .nav-links a {
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: color 0.2s ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--accent);
+    }
+
+    /* Header */
+    .hero {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2.5rem 2rem;
+      margin-bottom: 2.5rem;
+      box-shadow: var(--shadow);
+    }
+
+    .hero h1 {
+      font-size: 2.4rem;
+      color: var(--text-heading);
+      margin-bottom: 0.5rem;
+      font-weight: 800;
+    }
+
+    .hero p {
+      font-size: 1.15rem;
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    section {
+      margin-bottom: 3rem;
+    }
+
+    h2 {
+      color: var(--text-heading);
+      border-bottom: 2px solid var(--accent);
+      padding-bottom: 0.5rem;
+      margin-bottom: 1.5rem;
+      font-size: 1.6rem;
+    }
+
+    /* Log Entry Card */
+    .log-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.8rem;
+      margin-bottom: 2rem;
+      box-shadow: var(--shadow);
+    }
+
+    .log-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 0.8rem;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .log-title {
+      color: var(--accent-orange);
+      font-size: 1.35rem;
+      font-weight: 700;
+    }
+
+    .log-badge {
+      background: rgba(154, 103, 0, 0.1);
+      color: var(--accent-orange);
+      border: 1px solid rgba(154, 103, 0, 0.3);
+      padding: 0.25rem 0.75rem;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .log-badge.badge-green {
+      background: rgba(26, 127, 55, 0.1);
+      color: var(--accent-green);
+      border-color: rgba(26, 127, 55, 0.3);
+    }
+
+    .log-badge.badge-blue {
+      background: rgba(9, 105, 218, 0.1);
+      color: var(--accent);
+      border-color: rgba(9, 105, 218, 0.3);
+    }
+
+    .log-subheading {
+      font-weight: 700;
+      color: var(--text-heading);
+      margin: 1.2rem 0 0.4rem 0;
+      font-size: 1.05rem;
+    }
+
+    .log-text {
+      font-size: 0.98rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .log-metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 0.8rem;
+      background: #ffffff;
+      padding: 1rem;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      margin-top: 1.2rem;
+      font-size: 0.9rem;
+    }
+
+    .metric-item strong {
+      color: var(--text-heading);
+      display: block;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #57606a;
+    }
+
+    .metric-value {
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 1rem;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 3rem;
+      color: #57606a;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    
+    <!-- Top Navigation -->
+    <nav>
+      <a href="index.html" class="nav-logo">Skyden</a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="projects.html">Projects</a>
+        <a href="build-logs.html" class="active">Build Logs</a>
+        <a href="about.html">About</a>
+      </div>
+    </nav>
+
+    <!-- Hero Header -->
+    <div class="hero">
+      <h1>Engineering Notebook & Process Logs</h1>
+      <p>Failure analysis, tolerance calculations, thermal testing, and material optimization.</p>
+    </div>
+
+    <!-- Build Logs List -->
+    <section>
+      <h2>📓 Detailed Technical Case Studies</h2>
+
+      <!-- Log Entry 1 -->
+      <div class="log-card">
+        <div class="log-header">
+          <span class="log-title">Log #01: PETG Thermal Expansion & Gear clearance Seizure</span>
+          <span class="log-badge">Tolerance Calculation</span>
+        </div>
+
+        <div class="log-subheading">1. Problem Statement</div>
+        <p class="log-text">During initial high-RPM testing of a 3D printed planetary gear system, mechanical binding occurred after 45 seconds of continuous rotation. Thermal buildup from friction caused the PETG planetary gears to expand, reducing the mesh clearance to zero and seizing the assembly.</p>
+
+        <div class="log-subheading">2. Failure Analysis & Recalculation</div>
+        <p class="log-text">Measured the initial radial clearance at 0.15 mm. Calculated PETG thermal expansion coefficient ($\alpha \approx 60 \times 10^{-6} \, \text{K}^{-1}$) under friction-induced heating ($\Delta T \approx 35^\circ\text{C}$). Recalculated mesh tolerances in Fusion 360 to include a revised pitch diameter offset of 0.28 mm and added 45° chamfers to horizontal contact edges.</p>
+
+        <div class="log-subheading">3. Resolution & Results</div>
+        <p class="log-text">Re-printed the planet gears at 240°C nozzle temperature with a 0.28 mm clearance. Testing yielded zero binding during a 15-minute continuous run with zero measurable backlash.</p>
+
+        <div class="log-metrics-grid">
+          <div class="metric-item">
+            <strong>Initial Clearance</strong>
+            <span class="metric-value">0.15 mm (Bound)</span>
+          </div>
+          <div class="metric-item">
+            <strong>Optimal Clearance</strong>
+            <span class="metric-value">0.28 mm (Smooth)</span>
+          </div>
+          <div class="metric-item">
+            <strong>Extrusion Temp</strong>
+            <span class="metric-value">240°C PETG</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Log Entry 2 -->
+      <div class="log-card">
+        <div class="log-header">
+          <span class="log-title">Log #02: FEA Stress Analysis — Gyroid vs. Cubic Infill for UAV Mounts</span>
+          <span class="log-badge badge-green">Material Optimization</span>
+        </div>
+
+        <div class="log-subheading">1. Problem Statement</div>
+        <p class="log-text">Standard motor mounting brackets printed with 20% grid infill experienced shear failure along layer boundaries during sudden motor acceleration spikes on test rigs.</p>
+
+        <div class="log-subheading">2. Testing Methodology</div>
+        <p class="log-text">Modeled the motor mount in SolidWorks and conducted finite element analysis (FEA) to locate high stress concentrations. Printed three test coupons using 20% Grid, 25% Gyroid, and 30% Cubic infill settings to evaluate isotropic strength along the Z-axis.</p>
+
+        <div class="log-subheading">3. Results & Weight Savings</div>
+        <p class="log-text">The 25% Gyroid infill pattern distributed torsional load evenly across three axes, preventing shear along layer boundaries while reducing overall filament weight by 22% compared to the 30% Cubic alternative.</p>
+
+        <div class="log-metrics-grid">
+          <div class="metric-item">
+            <strong>Infill Pattern</strong>
+            <span class="metric-value">25% Gyroid</span>
+          </div>
+          <div class="metric-item">
+            <strong>Weight Reduction</strong>
+            <span class="metric-value">-22% Filament</span>
+          </div>
+          <div class="metric-item">
+            <strong>Shear Load Limit</strong>
+            <span class="metric-value">+38% Strength</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Log Entry 3 -->
+      <div class="log-card">
+        <div class="log-header">
+          <span class="log-title">Log #03: Airflow Simulation & Trailing Edge Thickness on Wing Sections</span>
+          <span class="log-badge badge-blue">Aerodynamics & CFD</span>
+        </div>
+
+        <div class="log-subheading">1. Problem Statement</div>
+        <p class="log-text">Standard 0.4 mm 3D printer nozzles leave thick trailing edges on aerodynamic airfoils, creating unwanted vortex shedding and increasing parasitic drag on UAV wing models.</p>
+
+        <div class="log-subheading">2. Design Iteration</div>
+        <p class="log-text">Switched to a 0.25 mm brass nozzle to print fine trailing edge geometry down to 0.3 mm width. Ran 2D airflow simulations (CFD) to observe boundary layer detachment at various angles of attack (0° to 12°).</p>
+
+        <div class="log-metrics-grid">
+          <div class="metric-item">
+            <strong>Nozzle Diameter</strong>
+            <span class="metric-value">0.25 mm</span>
+          </div>
+          <div class="metric-item">
+            <strong>Trailing Edge</strong>
+            <span class="metric-value">0.3 mm Precision</span>
+          </div>
+          <div class="metric-item">
+            <strong>CFD Pass Rate</strong>
+            <span class="metric-value">Validated @ 12° AoA</span>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <footer>
+      <p>© Skyden • Interactive Engineering Build Logs</p>
+    </footer>
+
+  </div>
+</body>
+</html>
