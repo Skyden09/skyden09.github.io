@@ -4,9 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Skyden | Aero & Engine 3D Design</title>
-  
+
   <!-- Google Search Console Verification Tag -->
   <meta name="google-site-verification" content="iRYYBdXb666YgmYYNfNPLTks2zjRXQXS6SWkvdZZuBo" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 
   <!-- Three.js Import Map -->
   <script type="importmap">
@@ -19,182 +23,280 @@
   </script>
 
   <style>
-    /* 1. BRIGHTER, COLORFUL LIGHT MODE THEME */
+    /* ===== TOKENS: engineering blueprint board ===== */
     :root {
-      --bg: #ffffff;
-      --card-bg: #f6f8fa;
-      --border: #d0d7de;
-      --text: #24292f;
-      --text-heading: #000000;
-      
-      /* Vibrant Accents */
-      --accent: #0969da; /* Sky Blue */
-      --accent-hover: #1e83ff;
-      --accent-green: #1a7f37; /* Success Green */
-      --accent-orange: #9a6700; /* Engineering Orange */
-      
-      --shadow: 0 4px 12px rgba(0,0,0,0.08);
-      --model-bg: radial-gradient(circle at center, #ffffff 0%, #e6eef7 100%);
+      --bg-void: #080c14;
+      --bg-panel: #0e1728;
+      --bg-panel-2: #101c33;
+      --line: #1c2c47;
+      --line-bright: #2c4468;
+
+      --cyan: #5eead4;
+      --cyan-dim: rgba(94, 234, 212, 0.28);
+      --amber: #ffb020;
+      --amber-dim: rgba(255, 176, 32, 0.25);
+
+      --paper: #ece6d6;
+      --paper-line: #cfc6ab;
+      --ink: #1d1a13;
+      --ink-dim: #6c644e;
+
+      --text: #c7d2e3;
+      --text-dim: #64769a;
+      --text-bright: #f3f6fb;
+
+      --font-display: 'Space Grotesk', sans-serif;
+      --font-body: 'Inter', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background-color: var(--bg);
+      font-family: var(--font-body);
+      background-color: var(--bg-void);
+      background-image:
+        linear-gradient(var(--line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--line) 1px, transparent 1px);
+      background-size: 42px 42px;
       color: var(--text);
       line-height: 1.6;
-      padding: 2rem 1rem;
+      padding: 3rem 1.25rem 1rem;
     }
 
-    .container {
-      max-width: 1000px; /* Wider for more images */
-      margin: 0 auto;
+    .container { max-width: 1000px; margin: 0 auto; }
+
+    a { color: inherit; }
+    ::selection { background: var(--cyan-dim); color: var(--text-bright); }
+
+    /* ===== Corner frame — the signature motif ===== */
+    .frame { position: relative; }
+    .frame::before, .frame::after {
+      content: ""; position: absolute; width: 14px; height: 14px; pointer-events: none;
+    }
+    .frame::before { top: -1px; left: -1px; border-top: 2px solid var(--cyan); border-left: 2px solid var(--cyan); }
+    .frame::after  { bottom: -1px; right: -1px; border-bottom: 2px solid var(--cyan); border-right: 2px solid var(--cyan); }
+    .frame .corner-tr, .frame .corner-bl { position: absolute; width: 14px; height: 14px; pointer-events: none; }
+    .frame .corner-tr { top: -1px; right: -1px; border-top: 2px solid var(--cyan); border-right: 2px solid var(--cyan); }
+    .frame .corner-bl { bottom: -1px; left: -1px; border-bottom: 2px solid var(--cyan); border-left: 2px solid var(--cyan); }
+
+    .frame.frame-paper::before, .frame.frame-paper::after,
+    .frame.frame-paper .corner-tr, .frame.frame-paper .corner-bl {
+      border-color: var(--amber);
     }
 
-    /* Aero Header */
+    /* ===== Title block header ===== */
     header {
-      text-align: center;
-      padding: 3rem 1.5rem;
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      margin-bottom: 2rem;
-      box-shadow: var(--shadow);
+      position: relative;
+      padding: 2.5rem 2rem 0;
+      background: var(--bg-panel);
+      border: 1px solid var(--line-bright);
+      margin-bottom: 3rem;
+    }
+
+    .eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      color: var(--cyan);
+      text-transform: uppercase;
     }
 
     header h1 {
-      color: var(--text-heading);
-      font-size: 2.8rem;
-      margin-bottom: 0.5rem;
+      font-family: var(--font-display);
       font-weight: 800;
+      font-size: clamp(2.6rem, 7vw, 4rem);
+      letter-spacing: -0.02em;
+      color: var(--text-bright);
+      margin: 0.4rem 0 0.3rem;
     }
 
-    header p {
-      color: var(--accent);
-      font-size: 1.3rem;
-      font-weight: 600;
-      margin-bottom: 1rem;
+    header .tagline {
+      font-size: 1.05rem;
+      color: var(--text-dim);
+      font-style: italic;
+      max-width: 34ch;
+      margin-bottom: 1.75rem;
     }
 
-    .tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.6rem;
-      justify-content: center;
+    .title-block {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-top: 1px solid var(--line-bright);
     }
-
-    .tag {
-      background: #e6eef7;
-      border: 1px solid var(--border);
-      color: var(--accent);
-      padding: 0.3rem 0.9rem;
-      border-radius: 20px;
-      font-size: 0.9rem;
+    .title-block div {
+      padding: 0.75rem 1rem 0.85rem;
+      border-right: 1px solid var(--line-bright);
+    }
+    .title-block div:last-child { border-right: none; }
+    .title-block .label {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      margin-bottom: 0.3rem;
+    }
+    .title-block .value {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: var(--text-bright);
       font-weight: 500;
     }
 
-    section {
-      margin-bottom: 3.5rem;
+    @media (max-width: 640px) {
+      .title-block { grid-template-columns: repeat(2, 1fr); }
+      .title-block div:nth-child(2) { border-right: none; }
+    }
+
+    /* ===== Section scaffolding ===== */
+    section { margin-bottom: 4rem; }
+
+    .sheet-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      color: var(--amber);
+      text-transform: uppercase;
     }
 
     h2 {
-      color: var(--text-heading);
-      border-bottom: 2px solid var(--accent);
-      padding-bottom: 0.5rem;
-      margin-bottom: 1.5rem;
-      font-size: 1.8rem;
-      display: flex;
-      align-items: center;
-      gap: 0.7rem;
+      font-family: var(--font-display);
+      font-weight: 700;
+      color: var(--text-bright);
+      font-size: 1.7rem;
+      margin: 0.35rem 0 1.5rem;
     }
 
-    /* BRIGHTER 3D VIEWER */
-    .viewer-card {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      overflow: hidden;
+    .dim-line {
       position: relative;
-      box-shadow: var(--shadow);
+      height: 1px;
+      background: var(--line-bright);
+      margin: 0 0 1.75rem;
+    }
+    .dim-line::before, .dim-line::after {
+      content: ""; position: absolute; top: -4px; width: 1px; height: 9px; background: var(--line-bright);
+    }
+    .dim-line::before { left: 0; }
+    .dim-line::after { right: 0; }
+
+    /* ===== Profile: bio + skills ===== */
+    .profile-grid {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr;
+      gap: 1.5rem;
+    }
+    @media (max-width: 768px) {
+      .profile-grid { grid-template-columns: 1fr; }
+    }
+
+    .bio-panel, .skills-panel {
+      background: var(--bg-panel);
+      border: 1px solid var(--line-bright);
+      padding: 1.75rem;
+    }
+
+    .markup {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.05em;
+      color: var(--amber);
+      text-transform: uppercase;
+      border-left: 2px solid var(--amber);
+      padding-left: 0.65rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .bio-header { display: flex; gap: 1rem; align-items: center; margin-bottom: 1.25rem; }
+    .bio-header .name { font-family: var(--font-display); font-weight: 700; font-size: 1.25rem; color: var(--text-bright); }
+    .bio-header .role {
+      font-family: var(--font-mono); font-size: 0.75rem; color: var(--cyan);
+      text-transform: uppercase; letter-spacing: 0.04em; margin-top: 0.3rem;
+    }
+
+    .avatar-placeholder {
+      width: 84px; height: 84px; flex-shrink: 0;
+      background: repeating-linear-gradient(45deg, transparent, transparent 6px, var(--line) 6px, var(--line) 12px);
+      border: 1px dashed var(--line-bright);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-mono); font-size: 0.55rem; color: var(--text-dim);
+      text-align: center; text-transform: uppercase; padding: 0.3rem;
+    }
+
+    .bio-panel p { font-size: 0.92rem; color: var(--text); margin-bottom: 0.9rem; }
+    .bio-panel p:last-child { margin-bottom: 0; }
+
+    .skill-group { margin-bottom: 1.3rem; }
+    .skill-group:last-child { margin-bottom: 0; }
+    .skill-group .label {
+      display: block; font-family: var(--font-mono); font-size: 0.65rem;
+      letter-spacing: 0.1em; color: var(--text-dim); text-transform: uppercase; margin-bottom: 0.6rem;
+    }
+
+    /* ===== 3D viewer panel ===== */
+    .viewer-card {
+      background: var(--bg-panel);
+      border: 1px solid var(--line-bright);
+      overflow: hidden;
     }
 
     #viewport-container {
       width: 100%;
-      height: 500px; /* Taller */
-      background: var(--model-bg);
+      height: 480px;
       position: relative;
+      background: radial-gradient(circle at 50% 45%, var(--bg-panel-2) 0%, var(--bg-void) 100%);
       cursor: grab;
     }
+    #viewport-container:active { cursor: grabbing; }
 
-    #viewport-container:active {
-      cursor: grabbing;
+    .hud { position: absolute; pointer-events: none; font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.04em; color: var(--cyan); text-shadow: 0 0 8px rgba(94,234,212,0.5); line-height: 1.6; }
+    .hud-tl { top: 14px; left: 16px; }
+    .hud-tr { top: 14px; right: 16px; text-align: right; }
+    .hud-bl { bottom: 14px; left: 16px; }
+    .hud .dim { color: var(--text-dim); }
+    .hud-crosshair {
+      position: absolute; top: 50%; left: 50%; width: 22px; height: 22px;
+      transform: translate(-50%, -50%); pointer-events: none; opacity: 0.35;
     }
+    .hud-crosshair::before, .hud-crosshair::after { content: ""; position: absolute; background: var(--cyan); }
+    .hud-crosshair::before { top: 50%; left: 0; width: 100%; height: 1px; transform: translateY(-50%); }
+    .hud-crosshair::after { left: 50%; top: 0; height: 100%; width: 1px; transform: translateX(-50%); }
 
     .viewer-controls {
-      display: flex;
-      gap: 0.5rem;
-      padding: 1rem;
-      background: #f1f3f5;
-      border-top: 1px solid var(--border);
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
+      display: flex; gap: 0.75rem; padding: 1rem 1.25rem;
+      background: var(--bg-panel-2); border-top: 1px solid var(--line-bright);
+      flex-wrap: wrap; align-items: center; justify-content: space-between;
     }
-
-    .btn-group {
-      display: flex;
-      gap: 0.6rem;
-    }
+    .btn-group { display: flex; gap: 0.6rem; flex-wrap: wrap; }
 
     .control-btn {
-      background: #ffffff;
-      border: 1px solid var(--border);
+      background: transparent;
+      border: 1px solid var(--line-bright);
       color: var(--text);
-      padding: 0.5rem 1.2rem;
-      border-radius: 8px;
+      padding: 0.5rem 1rem;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
       cursor: pointer;
-      font-size: 0.9rem;
-      font-weight: 600;
-      transition: all 0.2s ease;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      transition: all 0.15s ease;
     }
+    .control-btn:hover { border-color: var(--cyan); color: var(--cyan); }
+    .control-btn.active { background: var(--cyan-dim); border-color: var(--cyan); color: var(--cyan); }
 
-    .control-btn:hover {
-      background: var(--accent);
-      border-color: var(--accent);
-      color: #ffffff;
-    }
+    .viewer-hint { font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-dim); }
 
-    .control-btn.active {
-      background: var(--accent);
-      border-color: var(--accent);
-      color: #ffffff;
-    }
-
-    .viewer-hint {
-      font-size: 0.9rem;
-      color: #57606a;
-      font-weight: 500;
-    }
-
-    /* Build Log Cards with IMAGES */
-    .log-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 1.5rem;
-    }
+    /* ===== Build log / spec sheet cards ===== */
+    .log-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
 
     .log-card {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 12px;
+      background: var(--paper);
+      color: var(--ink);
       padding: 1.5rem;
-      box-shadow: var(--shadow);
       display: flex;
       gap: 1.5rem;
       align-items: flex-start;
@@ -202,286 +304,423 @@
 
     @media (max-width: 768px) {
       .log-card { flex-direction: column-reverse; }
-      header h1 { font-size: 2.2rem; }
     }
 
-    /* STRUCTURE FOR YOUR IMAGES */
     .log-image-placeholder {
       flex-shrink: 0;
-      width: 250px;
-      height: 180px;
-      background: #e1e4e8;
-      border-radius: 8px;
-      border: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #57606a;
-      font-size: 0.9rem;
-      overflow: hidden; /* If you add an img tag inside */
+      width: 240px;
+      height: 170px;
+      background:
+        repeating-linear-gradient(45deg, transparent, transparent 8px, rgba(29,26,19,0.06) 8px, rgba(29,26,19,0.06) 16px);
+      border: 1px dashed var(--paper-line);
+      display: flex; align-items: center; justify-content: center; text-align: center;
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.05em;
+      color: var(--ink-dim);
+      text-transform: uppercase;
+      padding: 0.5rem;
     }
-    
-    /* 
-       TO ADD AN ACTUAL IMAGE:
-       1. Upload your photo to GitHub in a 'images' folder.
-       2. Replace the div below with: 
-          <img src="images/my_engine_print.jpg" alt="3D Printed Part" class="log-image-placeholder">
-       3. Remove the width/height/background from CSS, just keep 'border-radius' and 'border'.
+
+    @media (max-width: 768px) { .log-image-placeholder { width: 100%; } }
+
+    /*
+       TO ADD A REAL PHOTO:
+       Replace .log-image-placeholder div with:
+         <img src="images/your-photo.jpg" alt="..." class="log-image-placeholder" style="object-fit:cover;">
+       and drop the background/border rules above for that instance.
     */
 
-    .log-content { flex-grow: 1; }
+    .log-content { flex-grow: 1; min-width: 0; }
 
     .log-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 0.7rem;
-      gap: 1rem;
+      display: flex; justify-content: space-between; align-items: flex-start;
+      gap: 1rem; margin-bottom: 0.6rem; flex-wrap: wrap;
     }
 
     .log-title {
-      color: var(--accent-orange); /* Colorful Engineering Orange */
-      font-size: 1.3rem;
+      font-family: var(--font-display);
       font-weight: 700;
+      font-size: 1.15rem;
+      color: var(--ink);
     }
 
     .log-badge {
-      background: rgba(26, 127, 55, 0.1);
-      color: var(--accent-green);
-      border: 1px solid rgba(26, 127, 55, 0.3);
-      padding: 0.2rem 0.7rem;
-      border-radius: 4px;
-      font-size: 0.8rem;
-      font-weight: 700;
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--ink);
+      border: 1px solid var(--ink);
+      padding: 0.2rem 0.6rem;
       white-space: nowrap;
     }
 
-    .log-metrics {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 0.75rem;
-      background: #ffffff;
-      padding: 1rem;
-      border-radius: 8px;
-      margin-top: 1rem;
-      font-size: 0.9rem;
-      border: 1px solid var(--border);
-    }
+    .log-content > p { font-size: 0.94rem; color: #3a3527; }
 
-    /* Project Grid with colorful cards */
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 1.5rem;
+    .spec-table { margin-top: 1.1rem; border-top: 1px solid var(--paper-line); }
+    .spec-row {
+      display: flex; justify-content: space-between; gap: 1rem;
+      padding: 0.5rem 0; border-bottom: 1px solid var(--paper-line);
+      font-family: var(--font-mono); font-size: 0.78rem;
     }
+    .spec-row .k { color: var(--ink-dim); text-transform: uppercase; letter-spacing: 0.04em; }
+    .spec-row .v { color: var(--ink); font-weight: 700; text-align: right; }
+
+    /* ===== Repository / project cards ===== */
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
 
     .card {
-      background-color: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 12px;
+      background: var(--bg-panel);
+      border: 1px solid var(--line-bright);
       padding: 1.5rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      box-shadow: var(--shadow);
-      transition: transform 0.2s ease, border-color 0.2s ease;
+      display: flex; flex-direction: column; justify-content: space-between;
+      transition: border-color 0.2s ease;
     }
-    
-    .card:hover {
-      transform: translateY(-4px);
-      border-color: var(--accent);
+    .card:hover { border-color: var(--cyan); }
+
+    .card h3 { font-family: var(--font-display); color: var(--text-bright); font-size: 1.2rem; margin-bottom: 0.6rem; }
+    .card > div > p { font-size: 0.9rem; color: var(--text-dim); }
+
+    .card-img-placeholder {
+      width: 100%; height: 140px;
+      background: repeating-linear-gradient(45deg, transparent, transparent 8px, var(--line) 8px, var(--line) 16px);
+      border: 1px dashed var(--line-bright);
+      margin-bottom: 1rem;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.05em;
+      text-transform: uppercase; color: var(--text-dim); text-align: center; padding: 0.5rem;
     }
 
-    .card h3 {
-      color: var(--accent);
-      font-size: 1.3rem;
-      margin-bottom: 0.7rem;
+    .chip-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
+    .chip {
+      font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.03em;
+      color: var(--cyan); border: 1px solid var(--cyan-dim); padding: 0.22rem 0.65rem;
     }
-    
-    .card-img-placeholder {
-      width: 100%;
-      height: 150px;
-      background: #e1e4e8;
-      border-radius: 8px;
-      margin-bottom: 1rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #57606a;
-      border: 1px solid var(--border);
+
+    .tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .tags .tag {
+      font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.03em;
+      color: var(--text-dim); border: 1px solid var(--line-bright); padding: 0.22rem 0.65rem;
+      text-transform: uppercase;
     }
 
     .btn {
       display: inline-block;
-      padding: 0.7rem 1.5rem;
-      color: #ffffff;
-      background-color: var(--accent-green);
-      border-radius: 8px;
-      text-decoration: none;
+      margin-top: 1.4rem;
+      padding: 0.65rem 1.3rem;
+      background: var(--cyan);
+      color: #04231e;
+      font-family: var(--font-mono);
       font-weight: 700;
-      font-size: 1rem;
-      margin-top: 1.2rem;
+      font-size: 0.8rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      text-decoration: none;
       text-align: center;
-      transition: background-color 0.2s ease;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      transition: opacity 0.15s ease;
     }
+    .btn:hover { opacity: 0.85; }
 
-    .btn:hover {
-      background-color: #2ea043;
+    /* ===== Signoff block ===== */
+    .signoff {
+      margin-top: 3.5rem;
+      border-top: 1px solid var(--line-bright);
+      padding-top: 1.75rem;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+    }
+    .signoff > div { padding: 0 1rem 0.5rem; border-right: 1px solid var(--line-bright); }
+    .signoff > div:last-child { border-right: none; }
+    .signoff .label {
+      display: block; font-family: var(--font-mono); font-size: 0.62rem;
+      letter-spacing: 0.1em; color: var(--text-dim); text-transform: uppercase; margin-bottom: 0.35rem;
+    }
+    .signoff .value { font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-bright); }
+    .signoff .value a { color: var(--cyan); text-decoration: none; }
+    .signoff .value a:hover { text-decoration: underline; }
+
+    .resume-cta { text-align: center; margin-top: 1.75rem; }
+
+    @media (max-width: 640px) {
+      .signoff { grid-template-columns: repeat(2, 1fr); }
+      .signoff > div:nth-child(2) { border-right: none; }
     }
 
     footer {
       text-align: center;
-      margin-top: 4rem;
-      color: #57606a;
-      font-size: 1rem;
-      font-weight: 500;
+      margin-top: 2rem;
+      color: var(--text-dim);
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.04em;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
     }
   </style>
 </head>
 <body>
   <div class="container">
-    
-    <!-- Hero / Header - Focused on Aero/Engines -->
-    <header>
-      <h1>Skyden</h1>
-      <p>"Propelling 3D design from CAD to Flight."</p>
-      <div class="tags">
-        <span class="tag">Jet Propulsion Systems</span>
-        <span class="tag">Unmanned Aerial Vehicles</span>
-        <span class="tag">3D Printed Airfoils</span>
-        <span class="tag">Functional CAD Design</span>
-        <span class="tag">WebGL Engineering</span>
+
+    <!-- Title block header -->
+    <header class="frame">
+      <span class="corner-tr"></span><span class="corner-bl"></span>
+      <span class="eyebrow">Aerospace R&D — Portfolio</span>
+      <h1>SKYDEN</h1>
+      <p class="tagline">Propelling 3D design from CAD to flight.</p>
+
+      <div class="title-block">
+        <div>
+          <span class="label">Drawn by</span>
+          <span class="value">[Your Name]</span>
+        </div>
+        <div>
+          <span class="label">Discipline</span>
+          <span class="value">Propulsion / Aero</span>
+        </div>
+        <div>
+          <span class="label">Sheet</span>
+          <span class="value">01–04</span>
+        </div>
+        <div>
+          <span class="label">Status</span>
+          <span class="value">Active build</span>
+        </div>
       </div>
     </header>
 
-    <!-- BRIGHTER 3D Sandbox -->
+    <!-- Profile -->
     <section>
-      <h2>⚙️ Interactive Aero-Engine CAD Showcase</h2>
-      <div class="viewer-card">
-        <div id="viewport-container"></div>
+      <span class="sheet-eyebrow">Sheet 01</span>
+      <h2>Profile</h2>
+      <div class="dim-line"></div>
+
+      <div class="profile-grid">
+        <div class="bio-panel frame">
+          <span class="corner-tr"></span><span class="corner-bl"></span>
+          <div class="markup">Markup — replace bracketed text with your info</div>
+          <div class="bio-header">
+            <div class="avatar-placeholder">Photo</div>
+            <div>
+              <div class="name">[Your Name]</div>
+              <div class="role">[Your role — e.g. Aerospace Eng. Student]</div>
+            </div>
+          </div>
+          <p>[One or two sentences on who you are — your program or school, and how you got into propulsion and aero-structural design.]</p>
+          <p>[A sentence on what you're currently building or exploring next.]</p>
+        </div>
+
+        <div class="skills-panel frame">
+          <span class="corner-tr"></span><span class="corner-bl"></span>
+          <div class="skill-group">
+            <span class="label">CAD &amp; Simulation</span>
+            <div class="chip-row">
+              <span class="chip">Fusion 360</span>
+              <span class="chip">SolidWorks</span>
+              <span class="chip">CFD Analysis</span>
+            </div>
+          </div>
+          <div class="skill-group">
+            <span class="label">Fabrication</span>
+            <div class="chip-row">
+              <span class="chip">FDM Printing</span>
+              <span class="chip">Resin / SLA</span>
+              <span class="chip">Metal FFF</span>
+            </div>
+          </div>
+          <div class="skill-group">
+            <span class="label">Programming</span>
+            <div class="chip-row">
+              <span class="chip">Python</span>
+              <span class="chip">JavaScript</span>
+              <span class="chip">Three.js / WebGL</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive 3D Sandbox -->
+    <section>
+      <span class="sheet-eyebrow">Sheet 02</span>
+      <h2>Interactive Aero-Engine Assembly</h2>
+      <div class="dim-line"></div>
+
+      <div class="viewer-card frame">
+        <span class="corner-tr"></span><span class="corner-bl"></span>
+        <div id="viewport-container">
+          <div class="hud hud-tl">
+            MODE: <span id="hud-mode">ASSEMBLED</span><br>
+            STRUCTURE: <span id="hud-structure">SOLID</span>
+          </div>
+          <div class="hud hud-tr">
+            AXLE θ: <span id="hud-rotation">0°</span><br>
+            <span class="dim">STAGES: 5C / 3T</span>
+          </div>
+          <div class="hud hud-bl">
+            <span class="dim">VIEW: ORBIT</span>
+          </div>
+          <div class="hud-crosshair"></div>
+        </div>
         <div class="viewer-controls">
           <div class="btn-group">
-            <button class="control-btn" id="btn-explode">Explode Assembly (See Internal Logic)</button>
-            <button class="control-btn" id="btn-wireframe">Show Mesh Structure</button>
-            <button class="control-btn" id="btn-reset">Reset Camera</button>
+            <button class="control-btn" id="btn-explode">Explode assembly</button>
+            <button class="control-btn" id="btn-wireframe">Show mesh</button>
+            <button class="control-btn" id="btn-reset">Reset camera</button>
           </div>
-          <span class="viewer-hint">Drag to rotate • Scroll to zoom</span>
+          <span class="viewer-hint">DRAG TO ROTATE · SCROLL TO ZOOM</span>
         </div>
       </div>
     </section>
 
-    <!-- Engineering Build Logs - Engines & Planes -->
+    <!-- Design logs -->
     <section>
-      <h2>📐 Design Logs & Print Reports</h2>
-      
+      <span class="sheet-eyebrow">Sheet 03</span>
+      <h2>Design Logs &amp; Print Reports</h2>
+      <div class="dim-line"></div>
+
       <div class="log-grid">
-        <div class="log-card">
-          <!-- PLACEHOLDER FOR IMAGE 1 -->
-          <div class="log-image-placeholder">
-            [Add Photo: Printed High-Temp Turbine Stage]
-          </div>
-          
+        <div class="log-card frame frame-paper">
+          <span class="corner-tr"></span><span class="corner-bl"></span>
+          <div class="log-image-placeholder">Photo pending — printed turbine stage</div>
           <div class="log-content">
             <div class="log-header">
-              <span class="log-title">01. Iterative Cooling for 3D Printed High-Temp Turbine Blades</span>
-              <span class="log-badge">Thermal Optimization</span>
+              <span class="log-title">01 · Iterative Cooling for 3D Printed High-Temp Turbine Blades</span>
+              <span class="log-badge">Thermal</span>
             </div>
-            <p>Designed and printed internal cooling channels in turbine geometry to manage heat during high-speed rotation. Tested complex gyroid lattice structures to increase surface area for heat exchange without sacrificing structural integrity.</p>
-            <div class="log-metrics">
-              <div><strong>Material:</strong> Specialized High-Temp Resin / Metal FFF</div>
-              <div><strong>Print Tolerance:</strong> ±0.05 mm</div>
-              <div><strong>Blade Geometry:</strong> Complex Internal Cooling Channels</div>
+            <p>Designed and printed internal cooling channels in turbine geometry to manage heat during high-speed rotation. Tested gyroid lattice structures to increase surface area for heat exchange without sacrificing structural integrity.</p>
+            <div class="spec-table">
+              <div class="spec-row"><span class="k">Material</span><span class="v">High-temp resin / metal FFF</span></div>
+              <div class="spec-row"><span class="k">Print tolerance</span><span class="v">±0.05 mm</span></div>
+              <div class="spec-row"><span class="k">Blade geometry</span><span class="v">Internal cooling channels</span></div>
             </div>
           </div>
         </div>
 
-        <div class="log-card">
-          <!-- PLACEHOLDER FOR IMAGE 2 -->
-          <div class="log-image-placeholder">
-            [Add Photo: UAV Wing with Infill]
-          </div>
-
+        <div class="log-card frame frame-paper">
+          <span class="corner-tr"></span><span class="corner-bl"></span>
+          <div class="log-image-placeholder">Photo pending — UAV wing with infill</div>
           <div class="log-content">
             <div class="log-header">
-              <span class="log-title">02. Lightweight Airfoil Structure for UAV Wings</span>
-              <span class="log-badge">Aero & Structural Design</span>
+              <span class="log-title">02 · Lightweight Airfoil Structure for UAV Wings</span>
+              <span class="log-badge">Aero / Structural</span>
             </div>
-            <p>Optimized a custom Naca airfoil section for a modular drone wing. Redesigned internal infill density to concentrate strength at the spar points while keeping the trailing edges lightweight for reduced drag.</p>
-            <div class="log-metrics">
-              <div><strong>CAD Software:</strong> Fusion 360 / SolidWorks</div>
-              <div><strong>Weight Reduction:</strong> 35% vs Solid Print</div>
-              <div><strong>Test Status:</strong> Computational Fluid Dynamics (CFD) Passed</div>
+            <p>Optimized a custom NACA airfoil section for a modular drone wing. Redesigned internal infill density to concentrate strength at the spar points while keeping the trailing edges lightweight for reduced drag.</p>
+            <div class="spec-table">
+              <div class="spec-row"><span class="k">CAD software</span><span class="v">Fusion 360 / SolidWorks</span></div>
+              <div class="spec-row"><span class="k">Weight reduction</span><span class="v">35% vs. solid print</span></div>
+              <div class="spec-row"><span class="k">Test status</span><span class="v">CFD passed</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="log-card frame frame-paper">
+          <span class="corner-tr"></span><span class="corner-bl"></span>
+          <div class="log-image-placeholder">Photo pending — [your build]</div>
+          <div class="log-content">
+            <div class="log-header">
+              <span class="log-title">03 · [Your Next Build Title]</span>
+              <span class="log-badge">Template</span>
+            </div>
+            <p>[Describe the problem you set out to solve, your design approach, and what you'd change next time.]</p>
+            <div class="spec-table">
+              <div class="spec-row"><span class="k">Material</span><span class="v">[e.g., PETG / Nylon]</span></div>
+              <div class="spec-row"><span class="k">Key metric</span><span class="v">[e.g., ±0.1 mm]</span></div>
+              <div class="spec-row"><span class="k">Status</span><span class="v">[e.g., in testing]</span></div>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Projects Grid - Engine/Plane Content -->
+    <!-- Repositories -->
     <section>
-      <h2>💻 Computational Engineering Repositories</h2>
+      <span class="sheet-eyebrow">Sheet 04</span>
+      <h2>Computational Engineering Repositories</h2>
+      <div class="dim-line"></div>
+
       <div class="grid">
-        <div class="card">
+        <div class="card frame">
+          <span class="corner-tr"></span><span class="corner-bl"></span>
           <div>
-            <!-- PROJECT IMAGE PLACEHOLDER -->
-            <div class="card-img-placeholder">
-              [Add Image: 3D Aero Viewer Screenshot]
-            </div>
+            <div class="card-img-placeholder">Screenshot pending — 3D aero viewer</div>
             <h3>3D Aero-Propulsion Viewer</h3>
             <p>A WebGL-powered engineering playground showcasing functional jet engine assemblies and aircraft components directly in the browser.</p>
-            <div class="tags" style="justify-content: flex-start;">
-              <span class="tag">JavaScript</span>
-              <span class="tag">Three.js</span>
-              <span class="tag">3D Printing CAD</span>
+            <div class="chip-row">
+              <span class="chip">JavaScript</span>
+              <span class="chip">Three.js</span>
+              <span class="chip">3D printing CAD</span>
             </div>
           </div>
-          <a class="btn" href="https://github.com/Skyden09/skyden09.github.io" target="_blank" rel="noopener">View Repository</a>
+          <a class="btn" href="https://github.com/Skyden09/skyden09.github.io" target="_blank" rel="noopener">View repository</a>
         </div>
 
-        <div class="card">
+        <div class="card frame">
+          <span class="corner-tr"></span><span class="corner-bl"></span>
           <div>
-            <!-- PROJECT IMAGE PLACEHOLDER -->
-            <div class="card-img-placeholder">
-              [Add Image: Avionics Python Script Output]
-            </div>
-            <h3>Avionics & Slicer Automation</h3>
+            <div class="card-img-placeholder">Screenshot pending — avionics script output</div>
+            <h3>Avionics &amp; Slicer Automation</h3>
             <p>Python scripts designed to automate 3D slicer settings for aerospace materials and process flight data logs.</p>
-            <div class="tags" style="justify-content: flex-start;">
-              <span class="tag">Python</span>
-              <span class="tag">Algorithms</span>
-              <span class="tag">Data Analysis</span>
+            <div class="chip-row">
+              <span class="chip">Python</span>
+              <span class="chip">Algorithms</span>
+              <span class="chip">Data analysis</span>
             </div>
           </div>
-          <a class="btn" href="https://github.com/Skyden09" target="_blank" rel="noopener">View Scripts Profile</a>
+          <a class="btn" href="https://github.com/Skyden09" target="_blank" rel="noopener">View scripts profile</a>
         </div>
       </div>
     </section>
 
+    <!-- Signoff -->
+    <div class="signoff">
+      <div>
+        <span class="label">Designed by</span>
+        <span class="value">[Your Name]</span>
+      </div>
+      <div>
+        <span class="label">Email</span>
+        <span class="value"><a href="mailto:you@example.com">[you@example.com]</a></span>
+      </div>
+      <div>
+        <span class="label">LinkedIn</span>
+        <span class="value"><a href="https://linkedin.com/in/yourname" target="_blank" rel="noopener">[linkedin.com/in/yourname]</a></span>
+      </div>
+      <div>
+        <span class="label">GitHub</span>
+        <span class="value"><a href="https://github.com/Skyden09" target="_blank" rel="noopener">github.com/Skyden09</a></span>
+      </div>
+    </div>
+
+    <!--
+       RESUME LINK: commit a resume.pdf to your repo root and this
+       button will work as-is. Or swap the href for a hosted link.
+    -->
+    <div class="resume-cta">
+      <a class="btn" href="resume.pdf" target="_blank" rel="noopener">Download résumé (PDF)</a>
+    </div>
+
     <footer>
-      <p>© Skyden • Specialized 3D Aero-Propulsion Design • Hosted on GitHub Pages</p>
+      SKYDEN — SPECIALIZED 3D AERO-PROPULSION DESIGN · HOSTED ON GITHUB PAGES
     </footer>
 
   </div>
 
-  <!-- BRIGHTER, COMPLEX JET ENGINE SCENE -->
+  <!-- Jet engine scene -->
   <script type="module">
     import * as THREE from 'three';
     import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
-    // Container Setup
     const container = document.getElementById('viewport-container');
     const width = container.clientWidth;
     const height = container.clientHeight;
 
-    // Scene, Camera, Renderer
     const scene = new THREE.Scene();
-    
-    // Change background to clear bright radial gradient (set via CSS on container)
-    // Here we just keep scene clear
-    
+
     const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
-    camera.position.set(15, 12, 18); /* Better initial angle */
+    camera.position.set(15, 12, 18);
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setSize(width, height);
@@ -490,151 +729,142 @@
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     container.appendChild(renderer.domElement);
 
-    // Orbit Controls
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
     controls.dampingFactor = 0.05;
 
-    // Lighting Setup - Brighter, Studio Quality
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.6); /* Higher ambient */
+    // Lighting — cool HUD-lit studio
+    const ambientLight = new THREE.AmbientLight(0x8fa8c9, 0.45);
     scene.add(ambientLight);
 
-    // Hemisphere light for natural sky/ground reflection
-    const hemiLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 0.8);
+    const hemiLight = new THREE.HemisphereLight(0x5eead4, 0x0a0f1c, 0.5);
     scene.add(hemiLight);
 
-    const dirLight1 = new THREE.DirectionalLight(0xffffff, 2.5); /* Strong key light */
+    const dirLight1 = new THREE.DirectionalLight(0xffffff, 2.2);
     dirLight1.position.set(10, 30, 20);
     dirLight1.castShadow = true;
-    // Optimize shadow quality
     dirLight1.shadow.mapSize.width = 2048;
     dirLight1.shadow.mapSize.height = 2048;
     scene.add(dirLight1);
 
-    const dirLight2 = new THREE.DirectionalLight(0xe6eef7, 1.2); /* Soft cool fill */
-    dirLight2.position.set(-15, -10, -5);
-    scene.add(dirLight2);
+    const rimLight = new THREE.DirectionalLight(0x5eead4, 1.4);
+    rimLight.position.set(-15, -6, -10);
+    scene.add(rimLight);
 
-    // Subtle Grid Floor - Blends with new background
-    const gridHelper = new THREE.GridHelper(30, 30, 0xd0d7de, 0xe1e4e8);
+    const accentPoint = new THREE.PointLight(0x5eead4, 6, 25);
+    accentPoint.position.set(0, 6, 8);
+    scene.add(accentPoint);
+
+    // Blueprint grid floor
+    const gridHelper = new THREE.GridHelper(30, 30, 0x2c4468, 0x16223a);
     gridHelper.position.y = -6;
     scene.add(gridHelper);
 
-    // CREATE COMPLEX JET ENGINE MODEL
+    // Jet engine assembly
     const engineAssembly = new THREE.Group();
 
-    // VIBRANT MATERIALS
     const casingMaterial = new THREE.MeshStandardMaterial({
-      color: 0x0969da, /* Vibrant Sky Blue */
+      color: 0x5eead4,
       metalness: 0.3,
-      roughness: 0.4,
+      roughness: 0.35,
       transparent: true,
-      opacity: 0.9 /* Slightly transparent to see internals */
+      opacity: 0.85
     });
 
     const turbineStageMaterial = new THREE.MeshStandardMaterial({
-      color: 0x9a6700, /* Engineering Orange */
-      metalness: 0.8,
-      roughness: 0.2
+      color: 0xffb020,
+      metalness: 0.75,
+      roughness: 0.25
     });
 
     const compressorMaterial = new THREE.MeshStandardMaterial({
-      color: 0xadb5bd, /* Steel/Gray */
+      color: 0x8fa3c0,
       metalness: 0.9,
-      roughness: 0.1
+      roughness: 0.15
     });
 
     const axleMaterial = new THREE.MeshStandardMaterial({
-      color: 0x000000,
+      color: 0x0a0f1c,
       metalness: 1.0,
-      roughness: 0.0
+      roughness: 0.1
     });
 
-    // Parts storage for animation
-    const components = {
-      casings: [],
-      compressors: [],
-      turbines: [],
-      axle: null
-    };
+    const components = { casings: [], compressors: [], turbines: [], axle: null };
 
-    // 1. Central Axle
+    // Central axle
     const axleGeo = new THREE.CylinderGeometry(0.3, 0.3, 16, 16);
     const axleMesh = new THREE.Mesh(axleGeo, axleMaterial);
-    axleMesh.rotation.z = Math.PI / 2; /* Horizontal orientation */
+    axleMesh.rotation.z = Math.PI / 2;
     axleMesh.castShadow = true;
     components.axle = axleMesh;
     engineAssembly.add(axleMesh);
 
-    // 2. Outer Cowling (Casing) - Two Halves
+    // Outer cowling — two halves
     const casingGeo = new THREE.CylinderGeometry(4.2, 3.8, 7, 32, 1, true);
-    
-    // Front half casing
+
     const casingFront = new THREE.Mesh(casingGeo, casingMaterial);
     casingFront.position.set(-3.5, 0, 0);
     casingFront.rotation.z = Math.PI / 2;
-    casingFront.userData = { explodeOffset: new THREE.Vector3(0, 5, 0) }; /* Explode Up */
+    casingFront.userData = { explodeOffset: new THREE.Vector3(0, 5, 0) };
     components.casings.push(casingFront);
     engineAssembly.add(casingFront);
 
-    // Back half casing
     const casingBack = new THREE.Mesh(casingGeo, casingMaterial);
     casingBack.position.set(3.5, 0, 0);
     casingBack.rotation.z = Math.PI / 2;
-    casingBack.userData = { explodeOffset: new THREE.Vector3(0, -5, 0) }; /* Explode Down */
+    casingBack.userData = { explodeOffset: new THREE.Vector3(0, -5, 0) };
     components.casings.push(casingBack);
     engineAssembly.add(casingBack);
 
-
-    // 3. Multi-Stage Compressor Section (Vibrant Orange Stages)
+    // Compressor stages
     const numCompressorStages = 5;
     for (let i = 0; i < numCompressorStages; i++) {
-      const radius = 3.2 - (i * 0.3); /* Slightly narrowing stages */
+      const radius = 3.2 - (i * 0.3);
       const stageGeo = new THREE.TorusGeometry(radius, 0.3, 12, 40);
       const stage = new THREE.Mesh(stageGeo, compressorMaterial);
-      
-      const posX = -6 + (i * 1.8); /* Spaced out */
+
+      const posX = -6 + (i * 1.8);
       stage.position.set(posX, 0, 0);
       stage.rotation.y = Math.PI / 2;
-      
-      // Explode radially
-      stage.userData = { 
+
+      stage.userData = {
         basePos: new THREE.Vector3(posX, 0, 0),
-        explodeOffset: new THREE.Vector3(0, 0, -4).applyAxisAngle(new THREE.Vector3(1,0,0), (i/numCompressorStages)*Math.PI*2) 
+        explodeOffset: new THREE.Vector3(0, 0, -4).applyAxisAngle(new THREE.Vector3(1, 0, 0), (i / numCompressorStages) * Math.PI * 2)
       };
-      
+
       components.compressors.push(stage);
       engineAssembly.add(stage);
     }
 
-    // 4. Turbine Section (Steel stages with "blades")
+    // Turbine stages
     const numTurbineStages = 3;
     for (let i = 0; i < numTurbineStages; i++) {
-      const radius = 2.0 + (i * 0.4); /* Narrowing rear stages */
+      const radius = 2.0 + (i * 0.4);
       const turbineGeo = new THREE.CylinderGeometry(radius, radius, 1.2, 16);
       const stage = new THREE.Mesh(turbineGeo, turbineStageMaterial);
-      
-      const posX = 4 + (i * 2); /* Rear placement */
+
+      const posX = 4 + (i * 2);
       stage.position.set(posX, 0, 0);
       stage.rotation.z = Math.PI / 2;
-      
-      // Explode outwards radially
-      stage.userData = { 
+
+      stage.userData = {
         basePos: new THREE.Vector3(posX, 0, 0),
-        explodeOffset: new THREE.Vector3(0, 4, 0).applyAxisAngle(new THREE.Vector3(1,0,0), (i/numTurbineStages)*Math.PI*2) 
+        explodeOffset: new THREE.Vector3(0, 4, 0).applyAxisAngle(new THREE.Vector3(1, 0, 0), (i / numTurbineStages) * Math.PI * 2)
       };
-      
+
       components.turbines.push(stage);
       engineAssembly.add(stage);
     }
 
     scene.add(engineAssembly);
 
-    // State Variables
     let isWireframe = false;
     let isExploded = false;
 
-    // Interactive Buttons
+    const hudMode = document.getElementById('hud-mode');
+    const hudStructure = document.getElementById('hud-structure');
+    const hudRotation = document.getElementById('hud-rotation');
+
     document.getElementById('btn-wireframe').addEventListener('click', (e) => {
       isWireframe = !isWireframe;
       casingMaterial.wireframe = isWireframe;
@@ -642,11 +872,13 @@
       compressorMaterial.wireframe = isWireframe;
       axleMaterial.wireframe = isWireframe;
       e.target.classList.toggle('active', isWireframe);
+      hudStructure.textContent = isWireframe ? 'MESH' : 'SOLID';
     });
 
     document.getElementById('btn-explode').addEventListener('click', (e) => {
       isExploded = !isExploded;
       e.target.classList.toggle('active', isExploded);
+      hudMode.textContent = isExploded ? 'EXPLODED' : 'ASSEMBLED';
     });
 
     document.getElementById('btn-reset').addEventListener('click', () => {
@@ -655,7 +887,6 @@
       controls.update();
     });
 
-    // Window Resize Handling
     window.addEventListener('resize', () => {
       const newWidth = container.clientWidth;
       const newHeight = container.clientHeight;
@@ -664,48 +895,32 @@
       renderer.setSize(newWidth, newHeight);
     });
 
-    // Animation Loop
     function animate() {
       requestAnimationFrame(animate);
 
-      // Rotate Internals (Compressors/Turbines/Axle) when NOT exploded
       if (!isExploded) {
-        components.axle.rotation.y += 0.05; /* Rotate Axle */
-        
-        components.compressors.forEach(comp => {
-          comp.rotation.z += 0.05;
-        });
-        
-        components.turbines.forEach(turb => {
-          turb.rotation.z += 0.05;
-        });
+        components.axle.rotation.y += 0.05;
+        components.compressors.forEach(comp => { comp.rotation.z += 0.05; });
+        components.turbines.forEach(turb => { turb.rotation.z += 0.05; });
       }
 
-      // Smooth Explode Animation Lerp
-      
-      // Casings (Split Up/Down)
       components.casings.forEach(casing => {
-        const targetPos = isExploded ? 
-          casing.userData.explodeOffset : 
-          new THREE.Vector3(casing.position.x, 0, 0);
+        const targetPos = isExploded ? casing.userData.explodeOffset : new THREE.Vector3(casing.position.x, 0, 0);
         casing.position.lerp(targetPos, 0.1);
       });
-      
-      // Compressors (Radial Explode)
+
       components.compressors.forEach(comp => {
-        const targetPos = isExploded ? 
-          comp.userData.basePos.clone().add(comp.userData.explodeOffset) : 
-          comp.userData.basePos;
+        const targetPos = isExploded ? comp.userData.basePos.clone().add(comp.userData.explodeOffset) : comp.userData.basePos;
         comp.position.lerp(targetPos, 0.1);
       });
-      
-      // Turbines (Radial Explode)
+
       components.turbines.forEach(turb => {
-        const targetPos = isExploded ? 
-          turb.userData.basePos.clone().add(turb.userData.explodeOffset) : 
-          turb.userData.basePos;
+        const targetPos = isExploded ? turb.userData.basePos.clone().add(turb.userData.explodeOffset) : turb.userData.basePos;
         turb.position.lerp(targetPos, 0.1);
       });
+
+      const deg = Math.round((THREE.MathUtils.radToDeg(components.axle.rotation.y) % 360 + 360) % 360);
+      hudRotation.textContent = deg + '°';
 
       controls.update();
       renderer.render(scene, camera);
