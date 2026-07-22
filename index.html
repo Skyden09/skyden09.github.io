@@ -3,10 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Skyden | Physical & Digital Engineering</title>
+  <title>Skyden | Aero & Engine 3D Design</title>
   
   <!-- Google Search Console Verification Tag -->
-  <meta name="google-site-verification" content="VaZ2ht2cFFBMaHG9fsuST-nl_aCbH0CIBvB7Jgrx3hI" />
+  <meta name="google-site-verification" content="iRYYBdXb666YgmYYNfNPLTks2zjRXQXS6SWkvdZZuBo" />
+
   <!-- Three.js Import Map -->
   <script type="importmap">
     {
@@ -18,16 +19,22 @@
   </script>
 
   <style>
+    /* 1. BRIGHTER, COLORFUL LIGHT MODE THEME */
     :root {
-      --bg: #0d1117;
-      --card-bg: #161b22;
-      --border: #30363d;
-      --text: #c9d1d9;
-      --text-heading: #ffffff;
-      --accent: #58a6ff;
-      --accent-hover: #79c0ff;
-      --accent-green: #238636;
-      --accent-orange: #d29922;
+      --bg: #ffffff;
+      --card-bg: #f6f8fa;
+      --border: #d0d7de;
+      --text: #24292f;
+      --text-heading: #000000;
+      
+      /* Vibrant Accents */
+      --accent: #0969da; /* Sky Blue */
+      --accent-hover: #1e83ff;
+      --accent-green: #1a7f37; /* Success Green */
+      --accent-orange: #9a6700; /* Engineering Orange */
+      
+      --shadow: 0 4px 12px rgba(0,0,0,0.08);
+      --model-bg: radial-gradient(circle at center, #ffffff 0%, #e6eef7 100%);
     }
 
     * {
@@ -45,76 +52,81 @@
     }
 
     .container {
-      max-width: 900px;
+      max-width: 1000px; /* Wider for more images */
       margin: 0 auto;
     }
 
+    /* Aero Header */
     header {
       text-align: center;
-      padding: 2.5rem 1.5rem;
+      padding: 3rem 1.5rem;
       background: var(--card-bg);
       border: 1px solid var(--border);
-      border-radius: 12px;
+      border-radius: 16px;
       margin-bottom: 2rem;
+      box-shadow: var(--shadow);
     }
 
     header h1 {
       color: var(--text-heading);
-      font-size: 2.2rem;
+      font-size: 2.8rem;
       margin-bottom: 0.5rem;
+      font-weight: 800;
     }
 
     header p {
       color: var(--accent);
-      font-size: 1.1rem;
-      font-weight: 500;
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
     }
 
     .tags {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-top: 1rem;
+      gap: 0.6rem;
       justify-content: center;
     }
 
     .tag {
-      background: #21262d;
+      background: #e6eef7;
       border: 1px solid var(--border);
-      color: var(--accent-hover);
-      padding: 0.25rem 0.75rem;
+      color: var(--accent);
+      padding: 0.3rem 0.9rem;
       border-radius: 20px;
-      font-size: 0.85rem;
+      font-size: 0.9rem;
+      font-weight: 500;
     }
 
     section {
-      margin-bottom: 3rem;
+      margin-bottom: 3.5rem;
     }
 
     h2 {
       color: var(--text-heading);
-      border-bottom: 1px solid var(--border);
+      border-bottom: 2px solid var(--accent);
       padding-bottom: 0.5rem;
-      margin-bottom: 1.2rem;
-      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+      font-size: 1.8rem;
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.7rem;
     }
 
-    /* 3D Viewer Styles */
+    /* BRIGHTER 3D VIEWER */
     .viewer-card {
       background: var(--card-bg);
       border: 1px solid var(--border);
-      border-radius: 12px;
+      border-radius: 16px;
       overflow: hidden;
       position: relative;
+      box-shadow: var(--shadow);
     }
 
     #viewport-container {
       width: 100%;
-      height: 420px;
-      background: radial-gradient(circle at center, #1c2128 0%, #0d1117 100%);
+      height: 500px; /* Taller */
+      background: var(--model-bg);
       position: relative;
       cursor: grab;
     }
@@ -126,8 +138,8 @@
     .viewer-controls {
       display: flex;
       gap: 0.5rem;
-      padding: 0.75rem 1rem;
-      background: #11151c;
+      padding: 1rem;
+      background: #f1f3f5;
       border-top: 1px solid var(--border);
       flex-wrap: wrap;
       align-items: center;
@@ -136,113 +148,182 @@
 
     .btn-group {
       display: flex;
-      gap: 0.5rem;
+      gap: 0.6rem;
     }
 
     .control-btn {
-      background: #21262d;
+      background: #ffffff;
       border: 1px solid var(--border);
       color: var(--text);
-      padding: 0.4rem 0.8rem;
-      border-radius: 6px;
+      padding: 0.5rem 1.2rem;
+      border-radius: 8px;
       cursor: pointer;
-      font-size: 0.85rem;
+      font-size: 0.9rem;
+      font-weight: 600;
       transition: all 0.2s ease;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
     }
 
     .control-btn:hover {
-      background: var(--border);
-      color: var(--text-heading);
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #ffffff;
     }
 
     .control-btn.active {
+      background: var(--accent);
       border-color: var(--accent);
-      color: var(--accent);
+      color: #ffffff;
     }
 
     .viewer-hint {
-      font-size: 0.8rem;
-      color: #8b949e;
+      font-size: 0.9rem;
+      color: #57606a;
+      font-weight: 500;
     }
 
-    /* Build Log Cards */
+    /* Build Log Cards with IMAGES */
+    .log-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
     .log-card {
       background: var(--card-bg);
       border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 1.25rem;
-      margin-bottom: 1rem;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+      display: flex;
+      gap: 1.5rem;
+      align-items: flex-start;
     }
+
+    @media (max-width: 768px) {
+      .log-card { flex-direction: column-reverse; }
+      header h1 { font-size: 2.2rem; }
+    }
+
+    /* STRUCTURE FOR YOUR IMAGES */
+    .log-image-placeholder {
+      flex-shrink: 0;
+      width: 250px;
+      height: 180px;
+      background: #e1e4e8;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #57606a;
+      font-size: 0.9rem;
+      overflow: hidden; /* If you add an img tag inside */
+    }
+    
+    /* 
+       TO ADD AN ACTUAL IMAGE:
+       1. Upload your photo to GitHub in a 'images' folder.
+       2. Replace the div below with: 
+          <img src="images/my_engine_print.jpg" alt="3D Printed Part" class="log-image-placeholder">
+       3. Remove the width/height/background from CSS, just keep 'border-radius' and 'border'.
+    */
+
+    .log-content { flex-grow: 1; }
 
     .log-header {
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.7rem;
+      gap: 1rem;
     }
 
     .log-title {
-      color: var(--accent);
-      font-size: 1.1rem;
-      font-weight: 600;
+      color: var(--accent-orange); /* Colorful Engineering Orange */
+      font-size: 1.3rem;
+      font-weight: 700;
     }
 
     .log-badge {
-      background: rgba(210, 153, 34, 0.15);
-      color: var(--accent-orange);
-      border: 1px solid rgba(210, 153, 34, 0.4);
-      padding: 0.15rem 0.5rem;
+      background: rgba(26, 127, 55, 0.1);
+      color: var(--accent-green);
+      border: 1px solid rgba(26, 127, 55, 0.3);
+      padding: 0.2rem 0.7rem;
       border-radius: 4px;
-      font-size: 0.75rem;
-      font-weight: 600;
+      font-size: 0.8rem;
+      font-weight: 700;
+      white-space: nowrap;
     }
 
     .log-metrics {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
       gap: 0.75rem;
-      background: #0d1117;
-      padding: 0.75rem;
-      border-radius: 6px;
-      margin-top: 0.75rem;
-      font-size: 0.85rem;
-      border: 1px solid #21262d;
+      background: #ffffff;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-top: 1rem;
+      font-size: 0.9rem;
+      border: 1px solid var(--border);
     }
 
-    /* Project Grid */
+    /* Project Grid with colorful cards */
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.2rem;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.5rem;
     }
 
     .card {
       background-color: var(--card-bg);
       border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 1.25rem;
+      border-radius: 12px;
+      padding: 1.5rem;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      box-shadow: var(--shadow);
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+    
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent);
     }
 
     .card h3 {
       color: var(--accent);
-      margin-bottom: 0.5rem;
+      font-size: 1.3rem;
+      margin-bottom: 0.7rem;
+    }
+    
+    .card-img-placeholder {
+      width: 100%;
+      height: 150px;
+      background: #e1e4e8;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #57606a;
+      border: 1px solid var(--border);
     }
 
     .btn {
       display: inline-block;
-      padding: 0.5rem 1rem;
+      padding: 0.7rem 1.5rem;
       color: #ffffff;
       background-color: var(--accent-green);
-      border-radius: 6px;
+      border-radius: 8px;
       text-decoration: none;
-      font-weight: 600;
-      font-size: 0.9rem;
-      margin-top: 1rem;
+      font-weight: 700;
+      font-size: 1rem;
+      margin-top: 1.2rem;
       text-align: center;
       transition: background-color 0.2s ease;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
 
     .btn:hover {
@@ -251,36 +332,38 @@
 
     footer {
       text-align: center;
-      margin-top: 3rem;
-      color: #8b949e;
-      font-size: 0.85rem;
+      margin-top: 4rem;
+      color: #57606a;
+      font-size: 1rem;
+      font-weight: 500;
     }
   </style>
 </head>
 <body>
   <div class="container">
     
-    <!-- Hero / Header -->
+    <!-- Hero / Header - Focused on Aero/Engines -->
     <header>
       <h1>Skyden</h1>
-      <p>"I build physical and digital things — here's the interactive proof."</p>
+      <p>"Propelling 3D design from CAD to Flight."</p>
       <div class="tags">
-        <span class="tag">3D CAD & Prototyping</span>
-        <span class="tag">WebGL / Three.js</span>
-        <span class="tag">Software Development</span>
-        <span class="tag">Mechanical Engineering</span>
+        <span class="tag">Jet Propulsion Systems</span>
+        <span class="tag">Unmanned Aerial Vehicles</span>
+        <span class="tag">3D Printed Airfoils</span>
+        <span class="tag">Functional CAD Design</span>
+        <span class="tag">WebGL Engineering</span>
       </div>
     </header>
 
-    <!-- 3D Interactive Sandbox -->
+    <!-- BRIGHTER 3D Sandbox -->
     <section>
-      <h2>⚙️ Interactive 3D CAD Showcase</h2>
+      <h2>⚙️ Interactive Aero-Engine CAD Showcase</h2>
       <div class="viewer-card">
         <div id="viewport-container"></div>
         <div class="viewer-controls">
           <div class="btn-group">
-            <button class="control-btn" id="btn-wireframe">Wireframe Mode</button>
-            <button class="control-btn" id="btn-explode">Explode Assembly</button>
+            <button class="control-btn" id="btn-explode">Explode Assembly (See Internal Logic)</button>
+            <button class="control-btn" id="btn-wireframe">Show Mesh Structure</button>
             <button class="control-btn" id="btn-reset">Reset Camera</button>
           </div>
           <span class="viewer-hint">Drag to rotate • Scroll to zoom</span>
@@ -288,49 +371,69 @@
       </div>
     </section>
 
-    <!-- Engineering Build Logs -->
+    <!-- Engineering Build Logs - Engines & Planes -->
     <section>
-      <h2>📐 Engineering Process & Build Logs</h2>
+      <h2>📐 Design Logs & Print Reports</h2>
       
-      <div class="log-card">
-        <div class="log-header">
-          <span class="log-title">01. Recalculating Tolerances for 3D Printed Planetary Gearbox</span>
-          <span class="log-badge">Iterative Design</span>
+      <div class="log-grid">
+        <div class="log-card">
+          <!-- PLACEHOLDER FOR IMAGE 1 -->
+          <div class="log-image-placeholder">
+            [Add Photo: Printed High-Temp Turbine Stage]
+          </div>
+          
+          <div class="log-content">
+            <div class="log-header">
+              <span class="log-title">01. Iterative Cooling for 3D Printed High-Temp Turbine Blades</span>
+              <span class="log-badge">Thermal Optimization</span>
+            </div>
+            <p>Designed and printed internal cooling channels in turbine geometry to manage heat during high-speed rotation. Tested complex gyroid lattice structures to increase surface area for heat exchange without sacrificing structural integrity.</p>
+            <div class="log-metrics">
+              <div><strong>Material:</strong> Specialized High-Temp Resin / Metal FFF</div>
+              <div><strong>Print Tolerance:</strong> ±0.05 mm</div>
+              <div><strong>Blade Geometry:</strong> Complex Internal Cooling Channels</div>
+            </div>
+          </div>
         </div>
-        <p>Initial print experienced mechanical binding due to PETG thermal expansion during extrusion. Recalculated mesh clearance and added chamfers to horizontal expansion edges to ensure zero-backlash rotation.</p>
-        <div class="log-metrics">
-          <div><strong>Initial Clearance:</strong> 0.15 mm (Seized)</div>
-          <div><strong>Optimal Clearance:</strong> 0.28 mm (Smooth)</div>
-          <div><strong>Print Speed:</strong> 45 mm/s @ 240°C</div>
-        </div>
-      </div>
 
-      <div class="log-card">
-        <div class="log-header">
-          <span class="log-title">02. Structural Optimization of 3D Printed Mounting Bracket</span>
-          <span class="log-badge">FEA & Stress Analysis</span>
-        </div>
-        <p>Analyzed load points on a custom motor mount. Redesigned internal infill geometry from grid to gyroid, reducing filament usage by 22% while increasing shear stress resistance along layer lines.</p>
-        <div class="log-metrics">
-          <div><strong>Material:</strong> PETG / Tough PLA</div>
-          <div><strong>Infill Pattern:</strong> 25% Gyroid</div>
-          <div><strong>Weight Saved:</strong> 34g per unit</div>
+        <div class="log-card">
+          <!-- PLACEHOLDER FOR IMAGE 2 -->
+          <div class="log-image-placeholder">
+            [Add Photo: UAV Wing with Infill]
+          </div>
+
+          <div class="log-content">
+            <div class="log-header">
+              <span class="log-title">02. Lightweight Airfoil Structure for UAV Wings</span>
+              <span class="log-badge">Aero & Structural Design</span>
+            </div>
+            <p>Optimized a custom Naca airfoil section for a modular drone wing. Redesigned internal infill density to concentrate strength at the spar points while keeping the trailing edges lightweight for reduced drag.</p>
+            <div class="log-metrics">
+              <div><strong>CAD Software:</strong> Fusion 360 / SolidWorks</div>
+              <div><strong>Weight Reduction:</strong> 35% vs Solid Print</div>
+              <div><strong>Test Status:</strong> Computational Fluid Dynamics (CFD) Passed</div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- Software & Repositories -->
+    <!-- Projects Grid - Engine/Plane Content -->
     <section>
-      <h2>💻 Code & Documentation</h2>
+      <h2>💻 Computational Engineering Repositories</h2>
       <div class="grid">
         <div class="card">
           <div>
-            <h3>3D WebGL Portfolio Viewer</h3>
-            <p>Interactive browser-based 3D renderer built with Three.js and ES modules for hosting engineering CAD prototypes.</p>
+            <!-- PROJECT IMAGE PLACEHOLDER -->
+            <div class="card-img-placeholder">
+              [Add Image: 3D Aero Viewer Screenshot]
+            </div>
+            <h3>3D Aero-Propulsion Viewer</h3>
+            <p>A WebGL-powered engineering playground showcasing functional jet engine assemblies and aircraft components directly in the browser.</p>
             <div class="tags" style="justify-content: flex-start;">
               <span class="tag">JavaScript</span>
               <span class="tag">Three.js</span>
-              <span class="tag">WebGL</span>
+              <span class="tag">3D Printing CAD</span>
             </div>
           </div>
           <a class="btn" href="https://github.com/Skyden09/skyden09.github.io" target="_blank" rel="noopener">View Repository</a>
@@ -338,25 +441,30 @@
 
         <div class="card">
           <div>
-            <h3>Software & Logic Tools</h3>
-            <p>Custom algorithmic scripts, game mechanics, and computational projects built for problem solving and physics simulation.</p>
+            <!-- PROJECT IMAGE PLACEHOLDER -->
+            <div class="card-img-placeholder">
+              [Add Image: Avionics Python Script Output]
+            </div>
+            <h3>Avionics & Slicer Automation</h3>
+            <p>Python scripts designed to automate 3D slicer settings for aerospace materials and process flight data logs.</p>
             <div class="tags" style="justify-content: flex-start;">
               <span class="tag">Python</span>
               <span class="tag">Algorithms</span>
+              <span class="tag">Data Analysis</span>
             </div>
           </div>
-          <a class="btn" href="https://github.com/Skyden09" target="_blank" rel="noopener">GitHub Profile</a>
+          <a class="btn" href="https://github.com/Skyden09" target="_blank" rel="noopener">View Scripts Profile</a>
         </div>
       </div>
     </section>
 
     <footer>
-      <p>© Skyden • Interactive Engineering Portfolio • Hosted on GitHub Pages</p>
+      <p>© Skyden • Specialized 3D Aero-Propulsion Design • Hosted on GitHub Pages</p>
     </footer>
 
   </div>
 
-  <!-- Three.js 3D Scene Script -->
+  <!-- BRIGHTER, COMPLEX JET ENGINE SCENE -->
   <script type="module">
     import * as THREE from 'three';
     import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
@@ -368,13 +476,18 @@
 
     // Scene, Camera, Renderer
     const scene = new THREE.Scene();
+    
+    // Change background to clear bright radial gradient (set via CSS on container)
+    // Here we just keep scene clear
+    
     const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
-    camera.position.set(12, 10, 15);
+    camera.position.set(15, 12, 18); /* Better initial angle */
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setSize(width, height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     container.appendChild(renderer.domElement);
 
     // Orbit Controls
@@ -382,79 +495,140 @@
     controls.enableDamping = true;
     controls.dampingFactor = 0.05;
 
-    // Lights
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+    // Lighting Setup - Brighter, Studio Quality
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.6); /* Higher ambient */
     scene.add(ambientLight);
 
-    const dirLight1 = new THREE.DirectionalLight(0x58a6ff, 2.0);
-    dirLight1.position.set(10, 20, 10);
+    // Hemisphere light for natural sky/ground reflection
+    const hemiLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 0.8);
+    scene.add(hemiLight);
+
+    const dirLight1 = new THREE.DirectionalLight(0xffffff, 2.5); /* Strong key light */
+    dirLight1.position.set(10, 30, 20);
+    dirLight1.castShadow = true;
+    // Optimize shadow quality
+    dirLight1.shadow.mapSize.width = 2048;
+    dirLight1.shadow.mapSize.height = 2048;
     scene.add(dirLight1);
 
-    const dirLight2 = new THREE.DirectionalLight(0xd29922, 1.0);
-    dirLight2.position.set(-10, -10, -10);
+    const dirLight2 = new THREE.DirectionalLight(0xe6eef7, 1.2); /* Soft cool fill */
+    dirLight2.position.set(-15, -10, -5);
     scene.add(dirLight2);
 
-    // Grid Floor
-    const gridHelper = new THREE.GridHelper(20, 20, 0x30363d, 0x21262d);
-    gridHelper.position.y = -3;
+    // Subtle Grid Floor - Blends with new background
+    const gridHelper = new THREE.GridHelper(30, 30, 0xd0d7de, 0xe1e4e8);
+    gridHelper.position.y = -6;
     scene.add(gridHelper);
 
-    // Create a Multi-Part Assembly Model (Procedural Mechanical CAD Model)
-    const assemblyGroup = new THREE.Group();
+    // CREATE COMPLEX JET ENGINE MODEL
+    const engineAssembly = new THREE.Group();
 
-    // Materials
-    const metallicMaterial = new THREE.MeshStandardMaterial({
-      color: 0x58a6ff,
-      metalness: 0.7,
+    // VIBRANT MATERIALS
+    const casingMaterial = new THREE.MeshStandardMaterial({
+      color: 0x0969da, /* Vibrant Sky Blue */
+      metalness: 0.3,
+      roughness: 0.4,
+      transparent: true,
+      opacity: 0.9 /* Slightly transparent to see internals */
+    });
+
+    const turbineStageMaterial = new THREE.MeshStandardMaterial({
+      color: 0x9a6700, /* Engineering Orange */
+      metalness: 0.8,
       roughness: 0.2
     });
 
-    const coreMaterial = new THREE.MeshStandardMaterial({
-      color: 0xd29922,
-      metalness: 0.5,
-      roughness: 0.3
+    const compressorMaterial = new THREE.MeshStandardMaterial({
+      color: 0xadb5bd, /* Steel/Gray */
+      metalness: 0.9,
+      roughness: 0.1
     });
 
-    const outerMaterial = new THREE.MeshStandardMaterial({
-      color: 0x8b949e,
-      metalness: 0.8,
-      roughness: 0.4
+    const axleMaterial = new THREE.MeshStandardMaterial({
+      color: 0x000000,
+      metalness: 1.0,
+      roughness: 0.0
     });
 
-    // Outer Ring / Casing
-    const ringGeo = new THREE.TorusGeometry(3.5, 0.4, 16, 50);
-    const ringMesh = new THREE.Mesh(ringGeo, outerMaterial);
-    ringMesh.rotation.x = Math.PI / 2;
-    assemblyGroup.add(ringMesh);
+    // Parts storage for animation
+    const components = {
+      casings: [],
+      compressors: [],
+      turbines: [],
+      axle: null
+    };
 
-    // Central Mechanical Gear / Core
-    const coreGeo = new THREE.CylinderGeometry(1.8, 1.8, 1.5, 24);
-    const coreMesh = new THREE.Mesh(coreGeo, coreMaterial);
-    assemblyGroup.add(coreMesh);
+    // 1. Central Axle
+    const axleGeo = new THREE.CylinderGeometry(0.3, 0.3, 16, 16);
+    const axleMesh = new THREE.Mesh(axleGeo, axleMaterial);
+    axleMesh.rotation.z = Math.PI / 2; /* Horizontal orientation */
+    axleMesh.castShadow = true;
+    components.axle = axleMesh;
+    engineAssembly.add(axleMesh);
 
-    // Exploding Gear Teeth / Shafts
-    const partsList = [];
-    const numShafts = 6;
-    for (let i = 0; i < numShafts; i++) {
-      const angle = (i / numShafts) * Math.PI * 2;
-      const shaftGeo = new THREE.BoxGeometry(0.6, 0.6, 2.2);
-      const shaft = new THREE.Mesh(shaftGeo, metallicMaterial);
+    // 2. Outer Cowling (Casing) - Two Halves
+    const casingGeo = new THREE.CylinderGeometry(4.2, 3.8, 7, 32, 1, true);
+    
+    // Front half casing
+    const casingFront = new THREE.Mesh(casingGeo, casingMaterial);
+    casingFront.position.set(-3.5, 0, 0);
+    casingFront.rotation.z = Math.PI / 2;
+    casingFront.userData = { explodeOffset: new THREE.Vector3(0, 5, 0) }; /* Explode Up */
+    components.casings.push(casingFront);
+    engineAssembly.add(casingFront);
+
+    // Back half casing
+    const casingBack = new THREE.Mesh(casingGeo, casingMaterial);
+    casingBack.position.set(3.5, 0, 0);
+    casingBack.rotation.z = Math.PI / 2;
+    casingBack.userData = { explodeOffset: new THREE.Vector3(0, -5, 0) }; /* Explode Down */
+    components.casings.push(casingBack);
+    engineAssembly.add(casingBack);
+
+
+    // 3. Multi-Stage Compressor Section (Vibrant Orange Stages)
+    const numCompressorStages = 5;
+    for (let i = 0; i < numCompressorStages; i++) {
+      const radius = 3.2 - (i * 0.3); /* Slightly narrowing stages */
+      const stageGeo = new THREE.TorusGeometry(radius, 0.3, 12, 40);
+      const stage = new THREE.Mesh(stageGeo, compressorMaterial);
       
-      const baseX = Math.cos(angle) * 2.5;
-      const baseZ = Math.sin(angle) * 2.5;
-      shaft.position.set(baseX, 0, baseZ);
-      shaft.rotation.y = -angle;
-
-      shaft.userData = {
-        basePos: new THREE.Vector3(baseX, 0, baseZ),
-        explodeDir: new THREE.Vector3(Math.cos(angle), 0, Math.sin(angle))
+      const posX = -6 + (i * 1.8); /* Spaced out */
+      stage.position.set(posX, 0, 0);
+      stage.rotation.y = Math.PI / 2;
+      
+      // Explode radially
+      stage.userData = { 
+        basePos: new THREE.Vector3(posX, 0, 0),
+        explodeOffset: new THREE.Vector3(0, 0, -4).applyAxisAngle(new THREE.Vector3(1,0,0), (i/numCompressorStages)*Math.PI*2) 
       };
-
-      partsList.push(shaft);
-      assemblyGroup.add(shaft);
+      
+      components.compressors.push(stage);
+      engineAssembly.add(stage);
     }
 
-    scene.add(assemblyGroup);
+    // 4. Turbine Section (Steel stages with "blades")
+    const numTurbineStages = 3;
+    for (let i = 0; i < numTurbineStages; i++) {
+      const radius = 2.0 + (i * 0.4); /* Narrowing rear stages */
+      const turbineGeo = new THREE.CylinderGeometry(radius, radius, 1.2, 16);
+      const stage = new THREE.Mesh(turbineGeo, turbineStageMaterial);
+      
+      const posX = 4 + (i * 2); /* Rear placement */
+      stage.position.set(posX, 0, 0);
+      stage.rotation.z = Math.PI / 2;
+      
+      // Explode outwards radially
+      stage.userData = { 
+        basePos: new THREE.Vector3(posX, 0, 0),
+        explodeOffset: new THREE.Vector3(0, 4, 0).applyAxisAngle(new THREE.Vector3(1,0,0), (i/numTurbineStages)*Math.PI*2) 
+      };
+      
+      components.turbines.push(stage);
+      engineAssembly.add(stage);
+    }
+
+    scene.add(engineAssembly);
 
     // State Variables
     let isWireframe = false;
@@ -463,9 +637,10 @@
     // Interactive Buttons
     document.getElementById('btn-wireframe').addEventListener('click', (e) => {
       isWireframe = !isWireframe;
-      metallicMaterial.wireframe = isWireframe;
-      coreMaterial.wireframe = isWireframe;
-      outerMaterial.wireframe = isWireframe;
+      casingMaterial.wireframe = isWireframe;
+      turbineStageMaterial.wireframe = isWireframe;
+      compressorMaterial.wireframe = isWireframe;
+      axleMaterial.wireframe = isWireframe;
       e.target.classList.toggle('active', isWireframe);
     });
 
@@ -475,7 +650,7 @@
     });
 
     document.getElementById('btn-reset').addEventListener('click', () => {
-      camera.position.set(12, 10, 15);
+      camera.position.set(15, 12, 18);
       controls.target.set(0, 0, 0);
       controls.update();
     });
@@ -493,18 +668,43 @@
     function animate() {
       requestAnimationFrame(animate);
 
-      // Slow rotation when not exploded
+      // Rotate Internals (Compressors/Turbines/Axle) when NOT exploded
       if (!isExploded) {
-        assemblyGroup.rotation.y += 0.005;
+        components.axle.rotation.y += 0.05; /* Rotate Axle */
+        
+        components.compressors.forEach(comp => {
+          comp.rotation.z += 0.05;
+        });
+        
+        components.turbines.forEach(turb => {
+          turb.rotation.z += 0.05;
+        });
       }
 
       // Smooth Explode Animation Lerp
-      partsList.forEach(part => {
-        const targetOffset = isExploded ? 1.8 : 0;
-        const targetPos = part.userData.basePos.clone().add(
-          part.userData.explodeDir.clone().multiplyScalar(targetOffset)
-        );
-        part.position.lerp(targetPos, 0.1);
+      
+      // Casings (Split Up/Down)
+      components.casings.forEach(casing => {
+        const targetPos = isExploded ? 
+          casing.userData.explodeOffset : 
+          new THREE.Vector3(casing.position.x, 0, 0);
+        casing.position.lerp(targetPos, 0.1);
+      });
+      
+      // Compressors (Radial Explode)
+      components.compressors.forEach(comp => {
+        const targetPos = isExploded ? 
+          comp.userData.basePos.clone().add(comp.userData.explodeOffset) : 
+          comp.userData.basePos;
+        comp.position.lerp(targetPos, 0.1);
+      });
+      
+      // Turbines (Radial Explode)
+      components.turbines.forEach(turb => {
+        const targetPos = isExploded ? 
+          turb.userData.basePos.clone().add(turb.userData.explodeOffset) : 
+          turb.userData.basePos;
+        turb.position.lerp(targetPos, 0.1);
       });
 
       controls.update();
